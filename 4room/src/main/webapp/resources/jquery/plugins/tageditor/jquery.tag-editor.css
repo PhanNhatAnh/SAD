@@ -1,0 +1,240 @@
+/***************** Using by the copyright of The Pixabay (included modify) *************/
+
+/**************************Little addtion****************************/
+.inline-code {
+	padding: 1px 5px;
+	background: #eee;
+	border-radius: 2px;
+}
+
+pre {
+	padding: 15px 10px;
+	font-size: .9em;
+	color: #555;
+	background: #edf3f8;
+}
+
+pre i {
+	color: #aaa;
+} /* comments */
+pre b {
+	font-weight: normal;
+	color: #cf4b25;
+} /* strings */
+pre em {
+	color: #0c59e9;
+} /* numeric */
+
+/* Pure CSS */
+.pure-button {
+	margin: 5px 0;
+	text-decoration: none !important;
+}
+
+.button-lg {
+	margin: 5px 0;
+	padding: .65em 1.6em;
+	font-size: 105%;
+}
+
+.button-sm {
+	font-size: 85%;
+}
+
+#response {
+	margin: 0 0 1.2em;
+	padding: 10px;
+	background: #f3f3f3;
+	color: #777;
+	font-size: .9em;
+	max-height: 150px;
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+#response i {
+	font-style: normal;
+	color: #cf4b25;
+}
+
+#response hr {
+	margin: 2px 0;
+	border: 0;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #fdfdfd;
+}
+/* color tags */
+.tag-editor .red-tag .tag-editor-tag {
+	color: #c65353;
+	background: #ffd7d7;
+}
+
+.tag-editor .red-tag .tag-editor-delete {
+	background-color: #ffd7d7;
+}
+
+.tag-editor .green-tag .tag-editor-tag {
+	color: #45872c;
+	background: #e1f3da;
+}
+
+.tag-editor .green-tag .tag-editor-delete {
+	background-color: #e1f3da;
+}
+
+.tag-editor .yellow-tag .tag-editor-tag {
+	color: #FF8000;
+	background: #FFFF00;
+}
+
+.tag-editor .yellow-tag .tag-editor-delete {
+	background-color: #FFFF00;
+}
+/******************************************************/
+
+/* surrounding tag container */
+.tag-editor {
+	list-style-type: none;
+	padding: 0 5px 0 0;
+	margin: 0;
+	overflow: hidden;
+	border: 1px solid #eee;
+	cursor: text;
+	font: normal 14px sans-serif;
+	color: #555;
+	background: #fff;
+}
+
+/* core styles usually need no change */
+.tag-editor li {
+	display: block;
+	float: left;
+	overflow: hidden;
+	margin: 3px 0;
+	line-height: 1.5;
+}
+
+.tag-editor div {
+	float: left;
+	padding: 0 4px;
+}
+
+.tag-editor .placeholder {
+	padding: 0 8px;
+	color: #bbb;
+}
+
+.tag-editor .tag-editor-spacer {
+	padding: 0;
+	width: 8px;
+	overflow: hidden;
+	color: transparent;
+	background: none;
+}
+
+.tag-editor input {
+	vertical-align: inherit;
+	border: 0;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	cursor: text;
+	font-family: inherit;
+	font-weight: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	box-shadow: none;
+	background: none;
+}
+
+/* tag style */
+.tag-editor .tag-editor-tag {
+	padding-left: 5px;
+	color: #46799b;
+	background: #e0eaf1;
+	white-space: nowrap;
+	overflow: hidden;
+	cursor: pointer;
+	border-radius: 2px 0 0 2px;
+}
+
+/* delete icon */
+.tag-editor .tag-editor-delete {
+	background: #e0eaf1;
+	cursor: pointer;
+	padding-right: 5px;
+	border-radius: 0 2px 2px 0;
+}
+
+.tag-editor .tag-editor-delete i {
+	display: inline-block;
+	width: 7px;
+	height: 7px;
+	vertical-align: middle;
+	background: url(delete.png) 0 0 no-repeat;
+	position: relative;
+	top: -1px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+.tag-editor .tag-editor-delete:hover i {
+	background-position: 0 -14px;
+}
+
+.tag-editor .tag-editor-tag.active+.tag-editor-delete, .tag-editor .tag-editor-tag.active+.tag-editor-delete i {
+	background: none;
+	cursor: text;
+}
+
+.tag-editor .tag-editor-tag.active {
+	background: none !important;
+}
+
+/* jQuery UI autocomplete - code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css */
+.ui-autocomplete {
+	position: absolute;
+	top: 0;
+	left: 0;
+	cursor: default;
+	font-size: 14px;
+}
+
+.ui-front {
+	z-index: 9999;
+}
+
+.ui-menu {
+	list-style: none;
+	padding: 1px;
+	margin: 0;
+	display: block;
+	outline: none;
+}
+
+.ui-menu .ui-menu-item a {
+	text-decoration: none;
+	display: block;
+	padding: 2px .4em;
+	line-height: 1.4;
+	min-height: 0; /* support: IE7 */
+}
+
+.ui-widget-content {
+	border: 1px solid #bbb;
+	background: #fff;
+	color: #555;
+}
+
+.ui-widget-content a {
+	color: #46799b;
+}
+
+.ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus,
+	.ui-widget-header .ui-state-focus {
+	background: #e0eaf1;
+}
+
+.ui-helper-hidden-accessible {
+	display: none;
+}
