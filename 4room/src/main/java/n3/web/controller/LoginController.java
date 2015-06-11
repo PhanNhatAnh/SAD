@@ -2,6 +2,14 @@ package n3.web.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
+import n3.web.entity.Account;
+import n3.web.service.AccountService;
+import n3.web.service.RatingService;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +33,8 @@ public class LoginController {
     private static final String LOGOUT_SUCCESS = "Logout Success!";
     /** Error when the action was not authorized to do. */
     private static final String NOT_AUTHORIZED_ERROR = "You do not have permission to access this page!";
+    /** Logger to log information */
+	private final static Logger LOG = Logger.getLogger(LoginController.class);
 
     /**
      * Home login.
@@ -49,6 +59,28 @@ public class LoginController {
         } else {
             // Do nothing.
         }
+
+        return "login";
+    }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(@RequestParam(value = "txtUsername", required = false) String username,
+            @RequestParam(value = "txtPassword", required = false) String password,
+            HttpServletRequest request, Model model) {
+    	if ((username != null) && (password != null)) {
+			AccountService accountService = new AccountService();
+    		Account account = accountService.checkLogin(username, password);
+    		if (account != null) {
+    			LOG.info("user: " + account);
+    			request.getSession().setAttribute("USER", account);
+    			
+    			return "home";
+			} else {
+				model.addAttribute("ERROR", WRONG_USER_AND_PASS_ERROR);
+			}
+		} else {
+			 model.addAttribute("ERROR", WRONG_USER_AND_PASS_ERROR);
+		}
 
         return "login";
     }

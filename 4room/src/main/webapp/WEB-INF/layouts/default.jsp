@@ -31,24 +31,24 @@
 	<div class="container">
 		<div class="">
 			<!-- not empty user -->
-			<c:if test="${user != null}">
-
+			<c:if test="${USER != null}">
+				<!-- left -->
+				<div class="pull-left" style="width: 20%">
+					<tiles:insertAttribute name="left" />
+				</div>
+			<!-- /left -->
 			</c:if>
 
-			<!-- left -->
-			<div class="pull-left">
-				<tiles:insertAttribute name="left" />
-			</div>
-			<!-- /left -->
-
 			<!-- right -->
-			<div class="pull-right">
+			<div class="pull-right" style="width: 20%;padding-left: 16px;">
 				<tiles:insertAttribute name="right" />
 			</div>
 			<!-- /right -->
 
 			<!-- Content -->
-			<tiles:insertAttribute name="body"/>
+			<div style="width: 80%; margin : 10px;">
+				<tiles:insertAttribute name="body"/>
+			</div>
 			<!-- /Content -->
 
 		</div>

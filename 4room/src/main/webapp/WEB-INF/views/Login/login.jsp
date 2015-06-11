@@ -1,142 +1,5 @@
-<%--
-
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%-- 
-    Document   : login
-    Created on : Jan 16, 2015, 3:40:17 PM
-    Author     : huynhthao
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="bootstrap-3.3.2-dist/css/bootstrap.css">
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <style>
-            body {
-                margin: 0;
-            }
-            header {
-                width: auto;
-                height: 60px;
-                background-color: #a73e2d;
-                cursor: default;
-                margin: auto;
-            }
-            .container {
-                max-width: 1000px;
-                margin: auto;
-            }
-            .logo {
-                background-size: 50%;
-                background-position: center;
-                background-repeat: no-repeat;
-                display: inline-block;
-                width: 200px;
-                height: 60px;
-                vertical-align: middle;
-            }
-            ul.navmenu {
-                display: inline-block;
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                vertical-align: middle;
-            }
-            ul.navmenu li.active {
-                background-color: rgba(0,0,0,0.3);
-            }
-            ul.navmenu li {
-                display: inline-block;
-                color: white;
-                font-size: 13px;
-                padding: 7px 13px;
-                border-radius: 5px;
-                text-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
-            }
-            ul.navmenu li a {
-                color: white;
-                text-decoration: none;
-            }
-            .unlogin {
-                float: right;
-                height: 50px;
-                padding: 0;
-                margin-top: 5px;
-                vertical-align: middle;
-            }
-            .login {
-                float: right;
-                height: 50px;
-                padding: 0;
-                vertical-align: middle;
-            }
-            .search {
-                width: 150px;
-                height: 5px;
-                padding: 0;
-                vertical-align: middle;
-            }
-        </style>
-        <title>Login Page</title>
-    </head>
-    <body>
-        <header>
-            <div class="container">
-                <div class="logo"><img src="img/logo.png" width="170px" height="50px" alt="Trung"/></div>
-                <ul class="navmenu">
-                    <li class="active">
-                        <a href="#">Problem</a>
-                    </li>
-                    <li>
-                        <a href="#">Article</a>
-                    </li>
-                    <li>
-                        <a href="#">Description</a>
-                    </li>
-                </ul>
-               
-                <c:if test="${sessionScope.ACCOUNT_SESSION == null}">
-                    <div class="unlogin">
-                        <form action="DispatcherServlet" method="POST">
-                            <input type="text" name="txtUsername" value="" placeholder="User Name">
-                            <input type="password" name="txtPassword" value="" placeholder="Your Password">
-                            <input type="submit" value="Log in" name="action" />
-                            <input type="hidden" name="from" value="${pageContext.request.requestURI}">
-                        </form>
-                        <a href="DispatcherServlet?action=register.jsp" style="float: right; color: #DDDDDD">Register New Account</a>
-                    </div>
-                </c:if>
-                <c:if test="${sessionScope.ACCOUNT_SESSION != null}">
-                    <div class="login">
-                        <h3><font color="white">Welcome, ${sessionScope.ACCOUNT_SESSION.username}</font></h3>
-                    </div>
-                </c:if>
-            </div>
-        </header>
-        <!--<a href="DispatcherServlet?action=detailquestion&questionid=1">${sessionScope.ACCOUNT_SESSION.username}</a>-->
-        <!--        <a href="DispatcherServlet?action=TagList">Tag List</a>
-                <a href="DispatcherServlet?action=Mainpage">Main Page</a>-->
-        <!--<a href="DispatcherServlet?action=AccountList">Account Management</a>-->
-    </body>
-</html>
-
---%>
-
-
-<%-- 
-    Document   : login
-    Created on : Jan 10, 2015, 6:26:51 PM
-    Author     : VyTKSE60964
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <title>Login</title>
         <style>
             html, body
             {
@@ -387,21 +250,19 @@
 
 
         </style>
-    </head>
 
-    <body>
 
-        <form id="login" action="DispatcherServlet" method="post">
+        <form id="login" action="login" method="post">
             <h1>Log In</h1>
-            <p style="color : red">${requestScope.message}</p>
             <fieldset id="inputs">
                 <input id="username" type="text" name="txtUsername" placeholder="Username" autofocus required>   
                 <input id="password" type="password" name="txtPassword" placeholder="Password" required>
             </fieldset>
+            <c:if test="${not empty ERROR}">
+            	<p style="color : red">${ERROR}</p>
+            </c:if>
             <fieldset id="actions">
                 <input type="submit" id="submit" name="action" value="Log in">
             </fieldset>
         </form>
-    </body>
-</html>
 

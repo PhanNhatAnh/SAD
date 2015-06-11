@@ -3,10 +3,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style type="text/css">
 /* @group right */
-#right { display: block; width: 200px; float: left; overflow: hidden; }
+#right { display: block; float: left; overflow: hidden; }
 #right .gcontent {
 	display: block;
-	margin-bottom: 10px;
+	margin: 10px;
 }
 
 #right .gcontent .head {
@@ -27,6 +27,13 @@
 	border-top: 0px;
 	padding: 10px 8px;
 	background: #f9f9f9;
+}
+
+#right .gcontent .boxy p{
+  	font-size: 12px;
+  	text-align: center;
+  	color: #333333;
+  	margin: 5px 0;
 }
 
 #right .gcontent .boxy .badgeCount {
@@ -71,6 +78,15 @@
 }
 </style>
 <div id="right">
+
+	<div class="gcontent">
+		<div class="boxy" style="background-color : #ccc">
+			<h2 style="color: red;">SpaceShip Battle</h2>
+			<p>Subcriptions</p>
+			<p><a href="#">Read More...</a></p>
+		</div>
+	</div>
+
 	<div class="gcontent">
 		<div class="head">
 			<h3>Top Ten</h3>
@@ -85,20 +101,4 @@
 		</div>
 	</div>
 
-	<div class="gcontent">
-		<div class="head">
-			<h3>SpaceShip Battle</h3>
-		</div>
-		<div class="boxy">
-			<p>Subcriptions - ${user.subcriptions.size()} total</p>
-
-			<div class="friendslist clearfix">
-				<c:forEach var="subcriptions" items="${user.subcriptions}">
-					<div class="friend">
-						<span class="friendly"><a href="#">${subcriptions.question.title}</a></span>
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-	</div>
 </div>

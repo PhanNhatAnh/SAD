@@ -25,7 +25,8 @@ public class ExRatingController extends RatingJpaController{
     	List<Rating> list = new ArrayList<Rating>();
     	EntityManager em = getEntityManager();
     	try {
-            Query query = em.createNamedQuery("Rating.findAll");
+            Query query = em.createNativeQuery("SELECT * FROM rating ORDER BY score DESC LIMIT 0, 10",
+            		Rating.class);
             list = query.getResultList();
             
             return list;
