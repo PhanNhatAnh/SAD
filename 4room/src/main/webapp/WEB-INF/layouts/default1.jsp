@@ -22,15 +22,12 @@
 	<!-- /header -->
 
 	<section class="content">
-		<!-- not empty user -->
-		<c:if test="${USER != null}">
-			<!-- left -->
-			<tiles:insertAttribute name="left" />
-			<!-- /left -->
-		</c:if>
+		<!-- left -->
+		<tiles:insertAttribute name="left" />
+		<!-- /left -->
 
 		<!-- Content -->
-		<tiles:insertAttribute name="body"/>
+		<tiles:insertAttribute name="body" />
 		<!-- /Content -->
 		<br class="spacer" />
 	</section>

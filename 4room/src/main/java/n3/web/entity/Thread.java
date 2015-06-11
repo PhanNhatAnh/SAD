@@ -13,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +34,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Thread.findAll", query = "SELECT t FROM Thread t"),
     @NamedQuery(name = "Thread.findByThreadID", query = "SELECT t FROM Thread t WHERE t.threadID = :threadID"),
-    @NamedQuery(name = "Thread.findByName", query = "SELECT t FROM Thread t WHERE t.name = :name"),
     @NamedQuery(name = "Thread.findByIsLock", query = "SELECT t FROM Thread t WHERE t.isLock = :isLock")})
 public class Thread implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -41,10 +43,14 @@ public class Thread implements Serializable {
     @Column(name = "threadID")
     private Integer threadID;
     @Basic(optional = false)
+    @Lob
     @Column(name = "name")
     private String name;
     @Column(name = "isLock")
     private Boolean isLock;
+    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    @ManyToOne(optional = false)
+    private Account accountID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "threadID")
     private List<Comment> commentList;
 
@@ -82,6 +88,14 @@ public class Thread implements Serializable {
 
     public void setIsLock(Boolean isLock) {
         this.isLock = isLock;
+    }
+
+    public Account getAccountID() {
+        return accountID;
+    }
+
+    public void setAccountID(Account accountID) {
+        this.accountID = accountID;
     }
 
     @XmlTransient

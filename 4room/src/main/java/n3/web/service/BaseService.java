@@ -26,7 +26,7 @@ import javax.persistence.Persistence;
  *
  */
 public class BaseService {
-    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("n3.web_controller_war_1.0.0PU");
+    static EntityManagerFactory emf = Persistence.createEntityManagerFactory("4room");
     
     public static EntityManagerFactory getEmf() {
         return emf;

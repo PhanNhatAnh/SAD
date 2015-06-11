@@ -25,7 +25,7 @@ public class RatingService extends BaseService{
 		controller = new ExRatingController(emf);
 	}
 	
-	public List<Rating> listAllRating() {
-		return controller.listAllRating();
+	public List<Rating> listTop10Rating() {
+		return controller.listTop10Rating();
 	}
 }

@@ -4,8 +4,14 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
                       http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
   version="2.0">
-    <persistence-unit name="n3.web_controller_war_1.0.0PU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="4room" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>n3.web.entity.Comment</class>
+    <class>n3.web.entity.Rating</class>
+    <class>n3.web.entity.Friendship</class>
+    <class>n3.web.entity.Accounticon</class>
+    <class>n3.web.entity.Account</class>
+    <class>n3.web.entity.Thread</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/forum?zeroDateTimeBehavior=convertToNull"/>

@@ -1,5 +1,7 @@
 package n3.web.service;
 
+import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 
 import n3.web.entity.Account;
@@ -25,5 +27,8 @@ public class AccountService extends BaseService{
 	
 	public Account checkLogin(String username, String password) {
 		return controller.checkLogin(username, password);
+	}
+	public List<Account> listAllAccount() {
+		return controller.findAccountEntities();
 	}
 }

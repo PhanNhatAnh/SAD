@@ -3,27 +3,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <nav class="content-left">
 	<div class="profilewidget">
-		<div class="useravatar">
-			<img alt="${USER.username}" src="resources/img/avatar.jpg" 
-			style="border: 1px solid #e8dbdb">
-		</div>
-		<div class="profilewidget-name">
-			<div>
-				<a class="profilewidget-username" href="#">${USER.username}</a>
+		<c:if test="${not empty USER}">
+			<div class="useravatar">
+				<img alt="${USER.username}"
+					src="resources/img/avatar/${USER.avatarImg}.jpg"
+					style="border: 1px solid #e8dbdb">
 			</div>
-			<div class="profilewidget-stats">
-				<c:if test="${USER.role == 'admin'}">
-					<img alt="icon" 
-					src="resources/img/logo.jpg" 
-					style="width: 18px;height: 18px;">  <font color="red">Administration</font>
-				</c:if>
-				<c:if test="${USER.role == 'member'}">
-					<img alt="icon" 
-					src="resources/img/logo.jpg" 
-					style="width: 18px;height: 18px;">  <font color="blue">member</font>
-				</c:if>
+			<div class="profilewidget-name">
+				<div>
+					<a class="profilewidget-username" href="#">${USER.username}</a>
+				</div>
+				<div class="profilewidget-stats">
+					<c:if test="${USER.role == 'admin'}">
+						<img alt="icon"
+							src="resources/img/icon/${USER.accIconID.icon }.png"
+							style="width: 18px; height: 18px;">
+						<font color="red">Administration</font>
+					</c:if>
+					<c:if test="${USER.role == 'member'}">
+						<img alt="icon"
+							src="resources/img/icon/${USER.accIconID.icon }.png"
+							style="width: 18px; height: 18px;">
+						<font color="blue">member</font>
+					</c:if>
+				</div>
 			</div>
-		</div>
+		</c:if>
+		<!-- not empty user -->
+		<c:if test="${empty USER}">
+			<div class="useravatar">
+				<img alt="" src="resources/img/avatar/member.jpg"
+					style="border: 1px solid #e8dbdb">
+			</div>
+			<div class="profilewidget-name">
+				<div>
+					<a class="profilewidget-username" href="#">Guest</a>
+				</div>
+		</c:if>
 
 	</div>
 	<div class="activity widget">
@@ -31,14 +47,26 @@
 			<a href="#">ACTIVITY</a>
 		</h3>
 		<ul class="widget-list">
-			<li><a class="listitem" href="">My problems <span
+			<li><a class="listitem" href="#">My Thread <span
 					class="widget-item-count">2</span></a></li>
-			<li><a class="listitem" href="">Invited problems <span
+			<li><a class="listitem" href="#">Comment <span
 					class="widget-item-count">5</span></a></li>
-			<li><a class="listitem" href="">Messages</a></li>
+			<li><a class="listitem" href="#">Messages</a></li>
 		</ul>
 	</div>
-	<div class="favoritetags widget">
+	<div class="widget-button">
+		<h4 class="flat3d-button">Top 10 of Score</h4>
+	</div>
+	<div class="hotquestions widget">
+		<ul class="widget-wraplist">
+			<c:forEach var="rate" items="${RATE}">
+				<li><img src="resources/img/icon/icon2.png"
+					style="width: 18px; height: 18px;"> <font color="">${rate.name}</font>
+					<font color="" style="float: right; padding-right: 5px;">${rate.score}</font></li>
+			</c:forEach>
+		</ul>
+	</div>
+	<!-- <div class="favoritetags widget">
 		<h3 class="widget-header">
 			<a href="#">FAVORITE TAGS</a>
 		</h3>
@@ -70,5 +98,5 @@
 			<li><a class="listitem" href=""><img width="17px"
 					height="17px" src="img/hainnt.png">Thao Huynh</a></li>
 		</ul>
-	</div>
+	</div> -->
 </nav>

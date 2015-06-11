@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import n3.web.entity.Account;
 import n3.web.entity.Comment;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,11 @@ public class ThreadJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Account accountID = thread.getAccountID();
+            if (accountID != null) {
+                accountID = em.getReference(accountID.getClass(), accountID.getAccountID());
+                thread.setAccountID(accountID);
+            }
             List<Comment> attachedCommentList = new ArrayList<Comment>();
             for (Comment commentListCommentToAttach : thread.getCommentList()) {
                 commentListCommentToAttach = em.getReference(commentListCommentToAttach.getClass(), commentListCommentToAttach.getCommentID());
@@ -48,6 +54,10 @@ public class ThreadJpaController implements Serializable {
             }
             thread.setCommentList(attachedCommentList);
             em.persist(thread);
+            if (accountID != null) {
+                accountID.getThreadList().add(thread);
+                accountID = em.merge(accountID);
+            }
             for (Comment commentListComment : thread.getCommentList()) {
                 Thread oldThreadIDOfCommentListComment = commentListComment.getThreadID();
                 commentListComment.setThreadID(thread);
@@ -71,6 +81,8 @@ public class ThreadJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Thread persistentThread = em.find(Thread.class, thread.getThreadID());
+            Account accountIDOld = persistentThread.getAccountID();
+            Account accountIDNew = thread.getAccountID();
             List<Comment> commentListOld = persistentThread.getCommentList();
             List<Comment> commentListNew = thread.getCommentList();
             List<String> illegalOrphanMessages = null;
@@ -85,6 +97,10 @@ public class ThreadJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (accountIDNew != null) {
+                accountIDNew = em.getReference(accountIDNew.getClass(), accountIDNew.getAccountID());
+                thread.setAccountID(accountIDNew);
+            }
             List<Comment> attachedCommentListNew = new ArrayList<Comment>();
             for (Comment commentListNewCommentToAttach : commentListNew) {
                 commentListNewCommentToAttach = em.getReference(commentListNewCommentToAttach.getClass(), commentListNewCommentToAttach.getCommentID());
@@ -93,6 +109,14 @@ public class ThreadJpaController implements Serializable {
             commentListNew = attachedCommentListNew;
             thread.setCommentList(commentListNew);
             thread = em.merge(thread);
+            if (accountIDOld != null && !accountIDOld.equals(accountIDNew)) {
+                accountIDOld.getThreadList().remove(thread);
+                accountIDOld = em.merge(accountIDOld);
+            }
+            if (accountIDNew != null && !accountIDNew.equals(accountIDOld)) {
+                accountIDNew.getThreadList().add(thread);
+                accountIDNew = em.merge(accountIDNew);
+            }
             for (Comment commentListNewComment : commentListNew) {
                 if (!commentListOld.contains(commentListNewComment)) {
                     Thread oldThreadIDOfCommentListNewComment = commentListNewComment.getThreadID();
@@ -143,6 +167,11 @@ public class ThreadJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Account accountID = thread.getAccountID();
+            if (accountID != null) {
+                accountID.getThreadList().remove(thread);
+                accountID = em.merge(accountID);
             }
             em.remove(thread);
             em.getTransaction().commit();

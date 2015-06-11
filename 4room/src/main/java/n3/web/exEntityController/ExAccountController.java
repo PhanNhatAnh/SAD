@@ -22,9 +22,9 @@ public class ExAccountController extends AccountJpaController{
 		Account account = null;
 		EntityManager em = getEntityManager();
     	try {
-            Query query = em.createQuery("SELECT a FROM Account a WHERE a.username = :username and a.password = :password");
+            Query query = em.createQuery("SELECT a FROM Account a WHERE a.username = :username and a.passwords = :passwords");
             query.setParameter("username", username);
-            query.setParameter("password", password);
+            query.setParameter("passwords", password);
             account = (Account) query.getSingleResult();
             
             return account;

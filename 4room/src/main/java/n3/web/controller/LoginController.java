@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  *
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController{
 
     /** Error when invalid username and password were inputed. */
     private static final String WRONG_USER_AND_PASS_ERROR = "Wrong Username or Password!";
@@ -72,6 +72,7 @@ public class LoginController {
     		Account account = accountService.checkLogin(username, password);
     		if (account != null) {
     			LOG.info("user: " + account);
+    			initData(model);
     			request.getSession().setAttribute("USER", account);
     			
     			return "home";
@@ -83,6 +84,14 @@ public class LoginController {
 		}
 
         return "login";
+    }
+    
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request, Model model) {
+    	request.getSession().invalidate();
+    	initData(model);
+    	
+    	return "home";
     }
 
     /**

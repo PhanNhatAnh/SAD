@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -32,8 +34,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
     @NamedQuery(name = "Account.findByAccountID", query = "SELECT a FROM Account a WHERE a.accountID = :accountID"),
     @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username"),
-    @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password"),
-    @NamedQuery(name = "Account.findByRole", query = "SELECT a FROM Account a WHERE a.role = :role")})
+    @NamedQuery(name = "Account.findByPasswords", query = "SELECT a FROM Account a WHERE a.passwords = :passwords"),
+    @NamedQuery(name = "Account.findByRole", query = "SELECT a FROM Account a WHERE a.role = :role"),
+    @NamedQuery(name = "Account.findByAvatarImg", query = "SELECT a FROM Account a WHERE a.avatarImg = :avatarImg")})
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,11 +48,21 @@ public class Account implements Serializable {
     @Column(name = "username")
     private String username;
     @Basic(optional = false)
-    @Column(name = "password")
-    private String password;
+    @Column(name = "passwords")
+    private String passwords;
     @Basic(optional = false)
     @Column(name = "role")
     private String role;
+    @Basic(optional = false)
+    @Column(name = "avatarImg")
+    private String avatarImg;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
+    private List<Thread> threadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
+    private List<Friendship> friendshipList;
+    @JoinColumn(name = "accIconID", referencedColumnName = "accIconID")
+    @ManyToOne(optional = false)
+    private Accounticon accIconID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
     private List<Comment> commentList;
 
@@ -60,11 +73,12 @@ public class Account implements Serializable {
         this.accountID = accountID;
     }
 
-    public Account(Integer accountID, String username, String password, String role) {
+    public Account(Integer accountID, String username, String passwords, String role, String avatarImg) {
         this.accountID = accountID;
         this.username = username;
-        this.password = password;
+        this.passwords = passwords;
         this.role = role;
+        this.avatarImg = avatarImg;
     }
 
     public Integer getAccountID() {
@@ -83,12 +97,12 @@ public class Account implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswords() {
+        return passwords;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswords(String passwords) {
+        this.passwords = passwords;
     }
 
     public String getRole() {
@@ -97,6 +111,42 @@ public class Account implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getAvatarImg() {
+        return avatarImg;
+    }
+
+    public void setAvatarImg(String avatarImg) {
+        this.avatarImg = avatarImg;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Thread> getThreadList() {
+        return threadList;
+    }
+
+    public void setThreadList(List<Thread> threadList) {
+        this.threadList = threadList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Friendship> getFriendshipList() {
+        return friendshipList;
+    }
+
+    public void setFriendshipList(List<Friendship> friendshipList) {
+        this.friendshipList = friendshipList;
+    }
+
+    public Accounticon getAccIconID() {
+        return accIconID;
+    }
+
+    public void setAccIconID(Accounticon accIconID) {
+        this.accIconID = accIconID;
     }
 
     @XmlTransient

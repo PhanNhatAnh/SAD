@@ -3,88 +3,45 @@
 <%@ page session="false"%>
 <section class="content-mid">
 	<div class="content-mid-header">
-		<h1>All problems</h1>
+		<h1>4 room</h1>
 		<div class="tabs">
 			<ul>
 				<li class="active"><a href="#">newest</a></li>
-				<li><a href="#">trending</a></li>
-				<li><a href="#">my tags</a></li>
-				<li><a href="#">unanswered</a></li>
+				<li><a href="#">oldest</a></li>
+				<li><a href="#">my thread</a></li>
+				<li><a href="#">my follows</a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="problem-container">
-		<div class="problem-item">
+		<c:forEach var="thread" items="${THREAD }">
+			<div class="problem-item">
 			<div class="problem-header">
 				<div class="problem-user">
-					<a href=""><img width="17px" height="17px" src="img/hainnt.png"><span>HaiNNT</span></a>
+					<a href=""><img width="17px" height="17px" 
+					src="resources/img/avatar/${thread.accountID.avatarImg}.jpg">
+					<span>${thread.accountID.username }</span></a>
 				</div>
 				<span class="post-time">just now</span> <span class="post-view">123
-					views</span>
+					comment</span>
 			</div>
 			<div class="problem-body">
 				<div class="problem-vote">
 					<div class="stat-count">16</div>
-					<div class="stat-desc">votes</div>
-					<div class="stat-count">2</div>
-					<div class="stat-desc">answers</div>
+					<div class="stat-desc">follows</div>
 				</div>
 				<div class="problem-content">
-					<h2>Nunc id mi eget massa imperdiet posuere. Integer blandit,
-						sapien eget bibendum gravida?</h2>
-					<p>Aliquam congue, enim a malesuada luctus, mi libero molestie
-						ipsum, quis la cinia sapien augue a nunc. Curabitur quis lobortis
-						dolor. Vestibulum non molestie dui. Vivamus vestibulum placerat
-						aliquam. Proin semper sem non nisl aliquet commodo sit amet
-						lobortis felis. Quisque quis nisl non massa luctus mattis. Mauris
-						in...</p>
+					<a href="#" style="text-decoration: none;">
+					<h2>${thread.name}</h2></a>
 				</div>
 				<div class="clearfix"></div>
 			</div>
-			<div class="problem-footer">
-				<a class="seemore-link" href="#">See more...</a> <span class="tags">
-					<a href="" class="tag">equation</a> <a href="" class="tag">caculus</a>
-					<a href="" class="tag">olympia</a> <a href="" class="tag">lhp</a>
-				</span>
-			</div>
 		</div>
-		<div class="problem-item">
-			<div class="problem-header">
-				<div class="problem-user">
-					<a href=""><img width="17px" height="17px" src="img/hainnt.png"><span>HaiNNT</span></a>
-				</div>
-				<span class="post-time">just now</span> <span class="post-view">123
-					views</span>
-			</div>
-			<div class="problem-body">
-				<div class="problem-vote">
-					<div class="stat-count">16</div>
-					<div class="stat-desc">votes</div>
-					<div class="stat-count">2</div>
-					<div class="stat-desc">answers</div>
-				</div>
-				<div class="problem-content">
-					<h2>Nunc id mi eget massa imperdiet posuere. Integer blandit,
-						sapien eget bibendum gravida?</h2>
-					<p>Aliquam congue, enim a malesuada luctus, mi libero molestie
-						ipsum, quis la cinia sapien augue a nunc. Curabitur quis lobortis
-						dolor. Vestibulum non molestie dui. Vivamus vestibulum placerat
-						aliquam. Proin semper sem non nisl aliquet commodo sit amet
-						lobortis felis. Quisque quis nisl non massa luctus mattis. Mauris
-						in...</p>
-				</div>
-				<div class="clearfix"></div>
-			</div>
-			<div class="problem-footer">
-				<a class="seemore-link" href="#">See more...</a> <span class="tags">
-					<a href="" class="tag">equation</a> <a href="" class="tag">caculus</a>
-					<a href="" class="tag">olympia</a> <a href="" class="tag">lhp</a>
-				</span>
-			</div>
-		</div>
+		</c:forEach>
+		
 	</div>
 </section>
-<nav class="content-right">
+<nav class="content-right" style="float: right;">
 	<div class="widget-welcomebox">
 		<h2>SpaceShip Battle</h2>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -94,16 +51,16 @@
 			<a href="#">Read More...</a>
 		</p>
 	</div>
-	<div class="widget-button">
-		<h4 class="flat3d-button">Top Ten Rating</h4>
-	</div>
-	<div class="hotquestions widget">
-		<ul class="widget-wraplist">
-			<c:forEach var="rate" items="${RATE}">
-					<li><img src="resources/img/logo.jpg" style="width: 18px;height: 18px;">
-					<font color="">${rate.name}</font>  
-					<font color="" style="float: right;">${rate.score}</font></li>
-				</c:forEach>
+	<div class="subscriptions widget">
+		<h3 class="widget-header">
+			<a href="#">Online members</a>
+		</h3>
+		<ul class="widget-list">
+		<c:forEach var="member" items="${MEMBERS }">
+			<li><a class="listitem" href=""><img width="17px"
+					height="17px" src="resources/img/avatar/${member.avatarImg }.jpg">${member.username}</a></li>
+		</c:forEach>
+			
 		</ul>
 	</div>
 </nav>

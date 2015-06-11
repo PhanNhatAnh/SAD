@@ -60,7 +60,7 @@ a.username {
 <header>
 	<div class="container">
 		<div class="logo">
-			<a href="home"><h3>SpaceShip Battle</h3></a>
+			<a href="home" style="text-decoration: none;"><h3>SpaceShip Battle</h3></a>
 		</div>
 		<ul class="navmenu">
 			<li><a href="#">Event</a></li>
@@ -76,7 +76,7 @@ a.username {
 			<div class="menu_profile" style="display: inline-block;">
 					<a href="#" class="username">${USER.username}
 						<div class="useravatar">
-							<img alt="${USER.username}" src="resources/img/avatar.jpg">
+							<img alt="${USER.username}" src="resources/img/avatar/${USER.avatarImg}.jpg">
 						</div>
 					</a>
 					<ul class="sub-menu">
@@ -88,7 +88,7 @@ a.username {
 				<!-- not empty user -->
 				<c:if test="${empty USER}">
 				<div style="margin-top: 10px;">
-				<font color="white"><a href="login">Login</a></font> || <font color="white">
+				<font color="white"><a href="login">Login</a></font> <font color="white">
 					<a href="register">Register</a></font>
 				</div>
 				</c:if>

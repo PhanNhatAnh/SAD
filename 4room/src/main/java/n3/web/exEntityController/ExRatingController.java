@@ -21,7 +21,7 @@ public class ExRatingController extends RatingJpaController{
         super(emf);
     }
 
-    public List<Rating> listAllRating() {
+    public List<Rating> listTop10Rating() {
     	List<Rating> list = new ArrayList<Rating>();
     	EntityManager em = getEntityManager();
     	try {
