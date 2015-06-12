@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,12 +35,12 @@ public class Friendship implements Serializable {
     @Basic(optional = false)
     @Column(name = "friendShipID")
     private Integer friendShipID;
-    @Lob
-    @Column(name = "friends")
-    private String friends;
-    @JoinColumn(name = "accountID", referencedColumnName = "accountID")
+    @JoinColumn(name = "accountID2", referencedColumnName = "accountID")
     @ManyToOne(optional = false)
-    private Account accountID;
+    private Account accountID2;
+    @JoinColumn(name = "accountID1", referencedColumnName = "accountID")
+    @ManyToOne(optional = false)
+    private Account accountID1;
 
     public Friendship() {
     }
@@ -58,20 +57,20 @@ public class Friendship implements Serializable {
         this.friendShipID = friendShipID;
     }
 
-    public String getFriends() {
-        return friends;
+    public Account getAccountID2() {
+        return accountID2;
     }
 
-    public void setFriends(String friends) {
-        this.friends = friends;
+    public void setAccountID2(Account accountID2) {
+        this.accountID2 = accountID2;
     }
 
-    public Account getAccountID() {
-        return accountID;
+    public Account getAccountID1() {
+        return accountID1;
     }
 
-    public void setAccountID(Account accountID) {
-        this.accountID = accountID;
+    public void setAccountID1(Account accountID1) {
+        this.accountID1 = accountID1;
     }
 
     @Override

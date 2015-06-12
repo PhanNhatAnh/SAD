@@ -31,16 +31,16 @@
 					<div class="stat-desc">follows</div>
 				</div>
 				<div class="problem-content">
-					<a href="#" style="text-decoration: none;">
+					<a href="thread?threadID=${thread.threadID }" style="text-decoration: none;">
 					<h2>${thread.name}</h2></a>
 				</div>
 				<div class="clearfix"></div>
 			</div>
 		</div>
 		</c:forEach>
-		
 	</div>
 </section>
+
 <nav class="content-right" style="float: right;">
 	<div class="widget-welcomebox">
 		<h2>SpaceShip Battle</h2>
@@ -51,16 +51,16 @@
 			<a href="#">Read More...</a>
 		</p>
 	</div>
-	<div class="subscriptions widget">
-		<h3 class="widget-header">
-			<a href="#">Online members</a>
-		</h3>
-		<ul class="widget-list">
-		<c:forEach var="member" items="${MEMBERS }">
-			<li><a class="listitem" href=""><img width="17px"
-					height="17px" src="resources/img/avatar/${member.avatarImg }.jpg">${member.username}</a></li>
-		</c:forEach>
-			
+	<div class="widget-button">
+		<h4 class="flat3d-button">Top 10 of Score</h4>
+	</div>
+	<div class="hotquestions widget">
+		<ul class="widget-wraplist">
+			<c:forEach var="rate" items="${RATE}">
+				<li><img src="resources/img/icon/${rate.icon}.png"
+					style="width: 18px; height: 18px;"> <font color="">${rate.name}</font>
+					<font color="" style="float: right; padding-right: 5px;">${rate.score}</font></li>
+			</c:forEach>
 		</ul>
 	</div>
 </nav>

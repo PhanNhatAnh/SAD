@@ -32,7 +32,7 @@
 		<!-- not empty user -->
 		<c:if test="${empty USER}">
 			<div class="useravatar">
-				<img alt="" src="resources/img/avatar/member.jpg"
+				<img alt="" src="resources/img/avatar/guest.jpg"
 					style="border: 1px solid #e8dbdb">
 			</div>
 			<div class="profilewidget-name">
@@ -47,56 +47,32 @@
 			<a href="#">ACTIVITY</a>
 		</h3>
 		<ul class="widget-list">
-			<li><a class="listitem" href="#">My Thread <span
-					class="widget-item-count">2</span></a></li>
-			<li><a class="listitem" href="#">Comment <span
-					class="widget-item-count">5</span></a></li>
-			<li><a class="listitem" href="#">Messages</a></li>
+			<li><a class="listitem" href="#">Threads <c:if
+						test="${NUMTHREAD != 0}">
+						<span class="widget-item-count">${NUMTHREAD}</span>
+					</c:if></a></li>
+			<li><a class="listitem" href="#">Comments <c:if
+						test="${NUMCOMMENT != 0}">
+						<span class="widget-item-count">${NUMCOMMENT}</span>
+					</c:if>
+			</a></li>
+			<li><a class="listitem" href="#">Messages <c:if
+						test="${NUMMESS != 0}">
+						<span class="widget-item-count">${NUMMESS}</span>
+					</c:if>
+			</a></li>
 		</ul>
 	</div>
-	<div class="widget-button">
-		<h4 class="flat3d-button">Top 10 of Score</h4>
-	</div>
-	<div class="hotquestions widget">
-		<ul class="widget-wraplist">
-			<c:forEach var="rate" items="${RATE}">
-				<li><img src="resources/img/icon/icon2.png"
-					style="width: 18px; height: 18px;"> <font color="">${rate.name}</font>
-					<font color="" style="float: right; padding-right: 5px;">${rate.score}</font></li>
-			</c:forEach>
-		</ul>
-	</div>
-	<!-- <div class="favoritetags widget">
+	<div class="subscriptions widget" 
+	style="border-top: 1px solid #e5e3e4;margin-right: 10px;">
 		<h3 class="widget-header">
-			<a href="#">FAVORITE TAGS</a>
-		</h3>
-		<div class="widget-taglist">
-			<a href="" class="tag">equation</a> <a href="" class="tag">caculus</a>
-			<a href="" class="tag">olympia</a> <a href="" class="tag">lhp</a>
-		</div>
-	</div>
-	<div class="topics widget">
-		<h3 class="widget-header">
-			<a href="#">TOPICS</a>
+			<a href="#">Online members</a>
 		</h3>
 		<ul class="widget-list">
-			<li><a class="listitem" href="">Math Olympia <span
-					class="widget-item-count">3</span></a></li>
-			<li><a class="listitem" href="">LHP Math Group</a></li>
-			<li><a class="listitem" href="">Madyss the kadric... <span
-					class="widget-item-count">20+</span></a></li>
+		<c:forEach var="member" items="${MEMBERS }">
+			<li><a class="listitem" href=""><img width="17px"
+					height="17px" src="resources/img/avatar/${member.avatarImg }.jpg">${member.username}</a></li>
+		</c:forEach>
 		</ul>
 	</div>
-	<div class="subscriptions widget">
-		<h3 class="widget-header">
-			<a href="#">SUBCRIPTSTION</a>
-		</h3>
-		<ul class="widget-list">
-			<li><a class="listitem" href=""><img width="17px"
-					height="17px" src="img/hainnt.png">HaiNNT</a><span
-				class="widget-item-count">4</span></li>
-			<li><a class="listitem" href=""><img width="17px"
-					height="17px" src="img/hainnt.png">Thao Huynh</a></li>
-		</ul>
-	</div> -->
 </nav>

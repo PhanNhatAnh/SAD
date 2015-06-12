@@ -42,6 +42,11 @@ public class CommentJpaController implements Serializable {
                 accountID = em.getReference(accountID.getClass(), accountID.getAccountID());
                 comment.setAccountID(accountID);
             }
+            Account lastEditBy = comment.getLastEditBy();
+            if (lastEditBy != null) {
+                lastEditBy = em.getReference(lastEditBy.getClass(), lastEditBy.getAccountID());
+                comment.setLastEditBy(lastEditBy);
+            }
             Thread threadID = comment.getThreadID();
             if (threadID != null) {
                 threadID = em.getReference(threadID.getClass(), threadID.getThreadID());
@@ -51,6 +56,10 @@ public class CommentJpaController implements Serializable {
             if (accountID != null) {
                 accountID.getCommentList().add(comment);
                 accountID = em.merge(accountID);
+            }
+            if (lastEditBy != null) {
+                lastEditBy.getCommentList().add(comment);
+                lastEditBy = em.merge(lastEditBy);
             }
             if (threadID != null) {
                 threadID.getCommentList().add(comment);
@@ -72,11 +81,17 @@ public class CommentJpaController implements Serializable {
             Comment persistentComment = em.find(Comment.class, comment.getCommentID());
             Account accountIDOld = persistentComment.getAccountID();
             Account accountIDNew = comment.getAccountID();
+            Account lastEditByOld = persistentComment.getLastEditBy();
+            Account lastEditByNew = comment.getLastEditBy();
             Thread threadIDOld = persistentComment.getThreadID();
             Thread threadIDNew = comment.getThreadID();
             if (accountIDNew != null) {
                 accountIDNew = em.getReference(accountIDNew.getClass(), accountIDNew.getAccountID());
                 comment.setAccountID(accountIDNew);
+            }
+            if (lastEditByNew != null) {
+                lastEditByNew = em.getReference(lastEditByNew.getClass(), lastEditByNew.getAccountID());
+                comment.setLastEditBy(lastEditByNew);
             }
             if (threadIDNew != null) {
                 threadIDNew = em.getReference(threadIDNew.getClass(), threadIDNew.getThreadID());
@@ -90,6 +105,14 @@ public class CommentJpaController implements Serializable {
             if (accountIDNew != null && !accountIDNew.equals(accountIDOld)) {
                 accountIDNew.getCommentList().add(comment);
                 accountIDNew = em.merge(accountIDNew);
+            }
+            if (lastEditByOld != null && !lastEditByOld.equals(lastEditByNew)) {
+                lastEditByOld.getCommentList().remove(comment);
+                lastEditByOld = em.merge(lastEditByOld);
+            }
+            if (lastEditByNew != null && !lastEditByNew.equals(lastEditByOld)) {
+                lastEditByNew.getCommentList().add(comment);
+                lastEditByNew = em.merge(lastEditByNew);
             }
             if (threadIDOld != null && !threadIDOld.equals(threadIDNew)) {
                 threadIDOld.getCommentList().remove(comment);
@@ -132,6 +155,11 @@ public class CommentJpaController implements Serializable {
             if (accountID != null) {
                 accountID.getCommentList().remove(comment);
                 accountID = em.merge(accountID);
+            }
+            Account lastEditBy = comment.getLastEditBy();
+            if (lastEditBy != null) {
+                lastEditBy.getCommentList().remove(comment);
+                lastEditBy = em.merge(lastEditBy);
             }
             Thread threadID = comment.getThreadID();
             if (threadID != null) {

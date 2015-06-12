@@ -5,6 +5,7 @@
 package n3.web.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -34,7 +37,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @NamedQueries({
     @NamedQuery(name = "Thread.findAll", query = "SELECT t FROM Thread t"),
     @NamedQuery(name = "Thread.findByThreadID", query = "SELECT t FROM Thread t WHERE t.threadID = :threadID"),
-    @NamedQuery(name = "Thread.findByIsLock", query = "SELECT t FROM Thread t WHERE t.isLock = :isLock")})
+    @NamedQuery(name = "Thread.findByIsLock", query = "SELECT t FROM Thread t WHERE t.isLock = :isLock"),
+    @NamedQuery(name = "Thread.findByLastUpdate", query = "SELECT t FROM Thread t WHERE t.lastUpdate = :lastUpdate")})
 public class Thread implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,6 +52,12 @@ public class Thread implements Serializable {
     private String name;
     @Column(name = "isLock")
     private Boolean isLock;
+    @Column(name = "lastUpdate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdate;
+    @JoinColumn(name = "lastUpdateBy", referencedColumnName = "accountID")
+    @ManyToOne(optional = false)
+    private Account lastUpdateBy;
     @JoinColumn(name = "accountID", referencedColumnName = "accountID")
     @ManyToOne(optional = false)
     private Account accountID;
@@ -88,6 +98,22 @@ public class Thread implements Serializable {
 
     public void setIsLock(Boolean isLock) {
         this.isLock = isLock;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Account getLastUpdateBy() {
+        return lastUpdateBy;
+    }
+
+    public void setLastUpdateBy(Account lastUpdateBy) {
+        this.lastUpdateBy = lastUpdateBy;
     }
 
     public Account getAccountID() {

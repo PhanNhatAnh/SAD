@@ -56,15 +56,21 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @Column(name = "avatarImg")
     private String avatarImg;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastUpdateBy")
     private List<Thread> threadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
+    private List<Thread> threadList1;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID2")
     private List<Friendship> friendshipList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID1")
+    private List<Friendship> friendshipList1;
     @JoinColumn(name = "accIconID", referencedColumnName = "accIconID")
     @ManyToOne(optional = false)
     private Accounticon accIconID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
     private List<Comment> commentList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastEditBy")
+    private List<Comment> commentList1;
 
     public Account() {
     }
@@ -133,12 +139,32 @@ public class Account implements Serializable {
 
     @XmlTransient
     @JsonIgnore
+    public List<Thread> getThreadList1() {
+        return threadList1;
+    }
+
+    public void setThreadList1(List<Thread> threadList1) {
+        this.threadList1 = threadList1;
+    }
+
+    @XmlTransient
+    @JsonIgnore
     public List<Friendship> getFriendshipList() {
         return friendshipList;
     }
 
     public void setFriendshipList(List<Friendship> friendshipList) {
         this.friendshipList = friendshipList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Friendship> getFriendshipList1() {
+        return friendshipList1;
+    }
+
+    public void setFriendshipList1(List<Friendship> friendshipList1) {
+        this.friendshipList1 = friendshipList1;
     }
 
     public Accounticon getAccIconID() {
@@ -157,6 +183,16 @@ public class Account implements Serializable {
 
     public void setCommentList(List<Comment> commentList) {
         this.commentList = commentList;
+    }
+
+    @XmlTransient
+    @JsonIgnore
+    public List<Comment> getCommentList1() {
+        return commentList1;
+    }
+
+    public void setCommentList1(List<Comment> commentList1) {
+        this.commentList1 = commentList1;
     }
 
     @Override

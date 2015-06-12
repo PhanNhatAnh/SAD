@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rating.findAll", query = "SELECT r FROM Rating r"),
     @NamedQuery(name = "Rating.findByRatingID", query = "SELECT r FROM Rating r WHERE r.ratingID = :ratingID"),
     @NamedQuery(name = "Rating.findByName", query = "SELECT r FROM Rating r WHERE r.name = :name"),
-    @NamedQuery(name = "Rating.findByScore", query = "SELECT r FROM Rating r WHERE r.score = :score")})
+    @NamedQuery(name = "Rating.findByScore", query = "SELECT r FROM Rating r WHERE r.score = :score"),
+    @NamedQuery(name = "Rating.findByIcon", query = "SELECT r FROM Rating r WHERE r.icon = :icon")})
 public class Rating implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,6 +42,9 @@ public class Rating implements Serializable {
     @Basic(optional = false)
     @Column(name = "score")
     private double score;
+    @Basic(optional = false)
+    @Column(name = "icon")
+    private String icon;
 
     public Rating() {
     }
@@ -49,10 +53,11 @@ public class Rating implements Serializable {
         this.ratingID = ratingID;
     }
 
-    public Rating(Integer ratingID, String name, double score) {
+    public Rating(Integer ratingID, String name, double score, String icon) {
         this.ratingID = ratingID;
         this.name = name;
         this.score = score;
+        this.icon = icon;
     }
 
     public Integer getRatingID() {
@@ -77,6 +82,14 @@ public class Rating implements Serializable {
 
     public void setScore(double score) {
         this.score = score;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     @Override

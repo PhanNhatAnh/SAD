@@ -36,15 +36,24 @@ public class FriendshipJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Account accountID = friendship.getAccountID();
-            if (accountID != null) {
-                accountID = em.getReference(accountID.getClass(), accountID.getAccountID());
-                friendship.setAccountID(accountID);
+            Account accountID2 = friendship.getAccountID2();
+            if (accountID2 != null) {
+                accountID2 = em.getReference(accountID2.getClass(), accountID2.getAccountID());
+                friendship.setAccountID2(accountID2);
+            }
+            Account accountID1 = friendship.getAccountID1();
+            if (accountID1 != null) {
+                accountID1 = em.getReference(accountID1.getClass(), accountID1.getAccountID());
+                friendship.setAccountID1(accountID1);
             }
             em.persist(friendship);
-            if (accountID != null) {
-                accountID.getFriendshipList().add(friendship);
-                accountID = em.merge(accountID);
+            if (accountID2 != null) {
+                accountID2.getFriendshipList().add(friendship);
+                accountID2 = em.merge(accountID2);
+            }
+            if (accountID1 != null) {
+                accountID1.getFriendshipList().add(friendship);
+                accountID1 = em.merge(accountID1);
             }
             em.getTransaction().commit();
         } finally {
@@ -60,20 +69,34 @@ public class FriendshipJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Friendship persistentFriendship = em.find(Friendship.class, friendship.getFriendShipID());
-            Account accountIDOld = persistentFriendship.getAccountID();
-            Account accountIDNew = friendship.getAccountID();
-            if (accountIDNew != null) {
-                accountIDNew = em.getReference(accountIDNew.getClass(), accountIDNew.getAccountID());
-                friendship.setAccountID(accountIDNew);
+            Account accountID2Old = persistentFriendship.getAccountID2();
+            Account accountID2New = friendship.getAccountID2();
+            Account accountID1Old = persistentFriendship.getAccountID1();
+            Account accountID1New = friendship.getAccountID1();
+            if (accountID2New != null) {
+                accountID2New = em.getReference(accountID2New.getClass(), accountID2New.getAccountID());
+                friendship.setAccountID2(accountID2New);
+            }
+            if (accountID1New != null) {
+                accountID1New = em.getReference(accountID1New.getClass(), accountID1New.getAccountID());
+                friendship.setAccountID1(accountID1New);
             }
             friendship = em.merge(friendship);
-            if (accountIDOld != null && !accountIDOld.equals(accountIDNew)) {
-                accountIDOld.getFriendshipList().remove(friendship);
-                accountIDOld = em.merge(accountIDOld);
+            if (accountID2Old != null && !accountID2Old.equals(accountID2New)) {
+                accountID2Old.getFriendshipList().remove(friendship);
+                accountID2Old = em.merge(accountID2Old);
             }
-            if (accountIDNew != null && !accountIDNew.equals(accountIDOld)) {
-                accountIDNew.getFriendshipList().add(friendship);
-                accountIDNew = em.merge(accountIDNew);
+            if (accountID2New != null && !accountID2New.equals(accountID2Old)) {
+                accountID2New.getFriendshipList().add(friendship);
+                accountID2New = em.merge(accountID2New);
+            }
+            if (accountID1Old != null && !accountID1Old.equals(accountID1New)) {
+                accountID1Old.getFriendshipList().remove(friendship);
+                accountID1Old = em.merge(accountID1Old);
+            }
+            if (accountID1New != null && !accountID1New.equals(accountID1Old)) {
+                accountID1New.getFriendshipList().add(friendship);
+                accountID1New = em.merge(accountID1New);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -104,10 +127,15 @@ public class FriendshipJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The friendship with id " + id + " no longer exists.", enfe);
             }
-            Account accountID = friendship.getAccountID();
-            if (accountID != null) {
-                accountID.getFriendshipList().remove(friendship);
-                accountID = em.merge(accountID);
+            Account accountID2 = friendship.getAccountID2();
+            if (accountID2 != null) {
+                accountID2.getFriendshipList().remove(friendship);
+                accountID2 = em.merge(accountID2);
+            }
+            Account accountID1 = friendship.getAccountID1();
+            if (accountID1 != null) {
+                accountID1.getFriendshipList().remove(friendship);
+                accountID1 = em.merge(accountID1);
             }
             em.remove(friendship);
             em.getTransaction().commit();

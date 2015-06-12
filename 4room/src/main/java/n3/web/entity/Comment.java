@@ -5,6 +5,7 @@
 package n3.web.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
     @NamedQuery(name = "Comment.findByCommentID", query = "SELECT c FROM Comment c WHERE c.commentID = :commentID"),
-    @NamedQuery(name = "Comment.findByHide", query = "SELECT c FROM Comment c WHERE c.hide = :hide")})
+    @NamedQuery(name = "Comment.findByHide", query = "SELECT c FROM Comment c WHERE c.hide = :hide"),
+    @NamedQuery(name = "Comment.findByLastEdit", query = "SELECT c FROM Comment c WHERE c.lastEdit = :lastEdit")})
 public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,9 +46,15 @@ public class Comment implements Serializable {
     @Lob
     @Column(name = "content")
     private String content;
+    @Column(name = "lastEdit")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastEdit;
     @JoinColumn(name = "accountID", referencedColumnName = "accountID")
     @ManyToOne(optional = false)
     private Account accountID;
+    @JoinColumn(name = "lastEditBy", referencedColumnName = "accountID")
+    @ManyToOne(optional = false)
+    private Account lastEditBy;
     @JoinColumn(name = "threadID", referencedColumnName = "threadID")
     @ManyToOne(optional = false)
     private Thread threadID;
@@ -80,12 +90,28 @@ public class Comment implements Serializable {
         this.content = content;
     }
 
+    public Date getLastEdit() {
+        return lastEdit;
+    }
+
+    public void setLastEdit(Date lastEdit) {
+        this.lastEdit = lastEdit;
+    }
+
     public Account getAccountID() {
         return accountID;
     }
 
     public void setAccountID(Account accountID) {
         this.accountID = accountID;
+    }
+
+    public Account getLastEditBy() {
+        return lastEditBy;
+    }
+
+    public void setLastEditBy(Account lastEditBy) {
+        this.lastEditBy = lastEditBy;
     }
 
     public Thread getThreadID() {

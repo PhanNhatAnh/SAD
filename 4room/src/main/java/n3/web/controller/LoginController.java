@@ -1,12 +1,15 @@
 package n3.web.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import n3.web.entity.Account;
+import n3.web.entity.Thread;
 import n3.web.service.AccountService;
 import n3.web.service.RatingService;
+import n3.web.service.ThreadService;
 
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpRequest;
@@ -72,7 +75,7 @@ public class LoginController extends BaseController{
     		Account account = accountService.checkLogin(username, password);
     		if (account != null) {
     			LOG.info("user: " + account);
-    			initData(model);
+    			initData(model,account);
     			request.getSession().setAttribute("USER", account);
     			
     			return "home";
@@ -89,7 +92,8 @@ public class LoginController extends BaseController{
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request, Model model) {
     	request.getSession().invalidate();
-    	initData(model);
+    	Account account = null;
+    	initData(model,account);
     	
     	return "home";
     }

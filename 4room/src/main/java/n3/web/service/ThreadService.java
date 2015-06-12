@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManagerFactory;
 
+import n3.web.entity.Account;
 import n3.web.entity.Thread;
 import n3.web.exEntityController.ExThreadController;
 
@@ -24,7 +25,17 @@ public class ThreadService extends BaseService{
 	public ThreadService(EntityManagerFactory emf) {
 		controller = new ExThreadController(emf);
 	}
+	
 	public List<Thread> listTop10Thread() {
 		return controller.listTop10Thread();
+	}
+	
+	public List<Thread> getThreadByAccID(Account accID) {
+		return controller.getThreadByAccID(accID);
+	}
+
+	public Thread findThreadByID(String threadID) {
+		int id = Integer.parseInt(threadID);
+		return controller.findThread(id);
 	}
 }

@@ -40,11 +40,20 @@ public class AccountJpaController implements Serializable {
         if (account.getThreadList() == null) {
             account.setThreadList(new ArrayList<Thread>());
         }
+        if (account.getThreadList1() == null) {
+            account.setThreadList1(new ArrayList<Thread>());
+        }
         if (account.getFriendshipList() == null) {
             account.setFriendshipList(new ArrayList<Friendship>());
         }
+        if (account.getFriendshipList1() == null) {
+            account.setFriendshipList1(new ArrayList<Friendship>());
+        }
         if (account.getCommentList() == null) {
             account.setCommentList(new ArrayList<Comment>());
+        }
+        if (account.getCommentList1() == null) {
+            account.setCommentList1(new ArrayList<Comment>());
         }
         EntityManager em = null;
         try {
@@ -61,39 +70,75 @@ public class AccountJpaController implements Serializable {
                 attachedThreadList.add(threadListThreadToAttach);
             }
             account.setThreadList(attachedThreadList);
+            List<Thread> attachedThreadList1 = new ArrayList<Thread>();
+            for (Thread threadList1ThreadToAttach : account.getThreadList1()) {
+                threadList1ThreadToAttach = em.getReference(threadList1ThreadToAttach.getClass(), threadList1ThreadToAttach.getThreadID());
+                attachedThreadList1.add(threadList1ThreadToAttach);
+            }
+            account.setThreadList1(attachedThreadList1);
             List<Friendship> attachedFriendshipList = new ArrayList<Friendship>();
             for (Friendship friendshipListFriendshipToAttach : account.getFriendshipList()) {
                 friendshipListFriendshipToAttach = em.getReference(friendshipListFriendshipToAttach.getClass(), friendshipListFriendshipToAttach.getFriendShipID());
                 attachedFriendshipList.add(friendshipListFriendshipToAttach);
             }
             account.setFriendshipList(attachedFriendshipList);
+            List<Friendship> attachedFriendshipList1 = new ArrayList<Friendship>();
+            for (Friendship friendshipList1FriendshipToAttach : account.getFriendshipList1()) {
+                friendshipList1FriendshipToAttach = em.getReference(friendshipList1FriendshipToAttach.getClass(), friendshipList1FriendshipToAttach.getFriendShipID());
+                attachedFriendshipList1.add(friendshipList1FriendshipToAttach);
+            }
+            account.setFriendshipList1(attachedFriendshipList1);
             List<Comment> attachedCommentList = new ArrayList<Comment>();
             for (Comment commentListCommentToAttach : account.getCommentList()) {
                 commentListCommentToAttach = em.getReference(commentListCommentToAttach.getClass(), commentListCommentToAttach.getCommentID());
                 attachedCommentList.add(commentListCommentToAttach);
             }
             account.setCommentList(attachedCommentList);
+            List<Comment> attachedCommentList1 = new ArrayList<Comment>();
+            for (Comment commentList1CommentToAttach : account.getCommentList1()) {
+                commentList1CommentToAttach = em.getReference(commentList1CommentToAttach.getClass(), commentList1CommentToAttach.getCommentID());
+                attachedCommentList1.add(commentList1CommentToAttach);
+            }
+            account.setCommentList1(attachedCommentList1);
             em.persist(account);
             if (accIconID != null) {
                 accIconID.getAccountList().add(account);
                 accIconID = em.merge(accIconID);
             }
             for (Thread threadListThread : account.getThreadList()) {
-                Account oldAccountIDOfThreadListThread = threadListThread.getAccountID();
-                threadListThread.setAccountID(account);
+                Account oldLastUpdateByOfThreadListThread = threadListThread.getLastUpdateBy();
+                threadListThread.setLastUpdateBy(account);
                 threadListThread = em.merge(threadListThread);
-                if (oldAccountIDOfThreadListThread != null) {
-                    oldAccountIDOfThreadListThread.getThreadList().remove(threadListThread);
-                    oldAccountIDOfThreadListThread = em.merge(oldAccountIDOfThreadListThread);
+                if (oldLastUpdateByOfThreadListThread != null) {
+                    oldLastUpdateByOfThreadListThread.getThreadList().remove(threadListThread);
+                    oldLastUpdateByOfThreadListThread = em.merge(oldLastUpdateByOfThreadListThread);
+                }
+            }
+            for (Thread threadList1Thread : account.getThreadList1()) {
+                Account oldAccountIDOfThreadList1Thread = threadList1Thread.getAccountID();
+                threadList1Thread.setAccountID(account);
+                threadList1Thread = em.merge(threadList1Thread);
+                if (oldAccountIDOfThreadList1Thread != null) {
+                    oldAccountIDOfThreadList1Thread.getThreadList1().remove(threadList1Thread);
+                    oldAccountIDOfThreadList1Thread = em.merge(oldAccountIDOfThreadList1Thread);
                 }
             }
             for (Friendship friendshipListFriendship : account.getFriendshipList()) {
-                Account oldAccountIDOfFriendshipListFriendship = friendshipListFriendship.getAccountID();
-                friendshipListFriendship.setAccountID(account);
+                Account oldAccountID2OfFriendshipListFriendship = friendshipListFriendship.getAccountID2();
+                friendshipListFriendship.setAccountID2(account);
                 friendshipListFriendship = em.merge(friendshipListFriendship);
-                if (oldAccountIDOfFriendshipListFriendship != null) {
-                    oldAccountIDOfFriendshipListFriendship.getFriendshipList().remove(friendshipListFriendship);
-                    oldAccountIDOfFriendshipListFriendship = em.merge(oldAccountIDOfFriendshipListFriendship);
+                if (oldAccountID2OfFriendshipListFriendship != null) {
+                    oldAccountID2OfFriendshipListFriendship.getFriendshipList().remove(friendshipListFriendship);
+                    oldAccountID2OfFriendshipListFriendship = em.merge(oldAccountID2OfFriendshipListFriendship);
+                }
+            }
+            for (Friendship friendshipList1Friendship : account.getFriendshipList1()) {
+                Account oldAccountID1OfFriendshipList1Friendship = friendshipList1Friendship.getAccountID1();
+                friendshipList1Friendship.setAccountID1(account);
+                friendshipList1Friendship = em.merge(friendshipList1Friendship);
+                if (oldAccountID1OfFriendshipList1Friendship != null) {
+                    oldAccountID1OfFriendshipList1Friendship.getFriendshipList1().remove(friendshipList1Friendship);
+                    oldAccountID1OfFriendshipList1Friendship = em.merge(oldAccountID1OfFriendshipList1Friendship);
                 }
             }
             for (Comment commentListComment : account.getCommentList()) {
@@ -103,6 +148,15 @@ public class AccountJpaController implements Serializable {
                 if (oldAccountIDOfCommentListComment != null) {
                     oldAccountIDOfCommentListComment.getCommentList().remove(commentListComment);
                     oldAccountIDOfCommentListComment = em.merge(oldAccountIDOfCommentListComment);
+                }
+            }
+            for (Comment commentList1Comment : account.getCommentList1()) {
+                Account oldLastEditByOfCommentList1Comment = commentList1Comment.getLastEditBy();
+                commentList1Comment.setLastEditBy(account);
+                commentList1Comment = em.merge(commentList1Comment);
+                if (oldLastEditByOfCommentList1Comment != null) {
+                    oldLastEditByOfCommentList1Comment.getCommentList1().remove(commentList1Comment);
+                    oldLastEditByOfCommentList1Comment = em.merge(oldLastEditByOfCommentList1Comment);
                 }
             }
             em.getTransaction().commit();
@@ -123,17 +177,31 @@ public class AccountJpaController implements Serializable {
             Accounticon accIconIDNew = account.getAccIconID();
             List<Thread> threadListOld = persistentAccount.getThreadList();
             List<Thread> threadListNew = account.getThreadList();
+            List<Thread> threadList1Old = persistentAccount.getThreadList1();
+            List<Thread> threadList1New = account.getThreadList1();
             List<Friendship> friendshipListOld = persistentAccount.getFriendshipList();
             List<Friendship> friendshipListNew = account.getFriendshipList();
+            List<Friendship> friendshipList1Old = persistentAccount.getFriendshipList1();
+            List<Friendship> friendshipList1New = account.getFriendshipList1();
             List<Comment> commentListOld = persistentAccount.getCommentList();
             List<Comment> commentListNew = account.getCommentList();
+            List<Comment> commentList1Old = persistentAccount.getCommentList1();
+            List<Comment> commentList1New = account.getCommentList1();
             List<String> illegalOrphanMessages = null;
             for (Thread threadListOldThread : threadListOld) {
                 if (!threadListNew.contains(threadListOldThread)) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Thread " + threadListOldThread + " since its accountID field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Thread " + threadListOldThread + " since its lastUpdateBy field is not nullable.");
+                }
+            }
+            for (Thread threadList1OldThread : threadList1Old) {
+                if (!threadList1New.contains(threadList1OldThread)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Thread " + threadList1OldThread + " since its accountID field is not nullable.");
                 }
             }
             for (Friendship friendshipListOldFriendship : friendshipListOld) {
@@ -141,7 +209,15 @@ public class AccountJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Friendship " + friendshipListOldFriendship + " since its accountID field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Friendship " + friendshipListOldFriendship + " since its accountID2 field is not nullable.");
+                }
+            }
+            for (Friendship friendshipList1OldFriendship : friendshipList1Old) {
+                if (!friendshipList1New.contains(friendshipList1OldFriendship)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Friendship " + friendshipList1OldFriendship + " since its accountID1 field is not nullable.");
                 }
             }
             for (Comment commentListOldComment : commentListOld) {
@@ -150,6 +226,14 @@ public class AccountJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain Comment " + commentListOldComment + " since its accountID field is not nullable.");
+                }
+            }
+            for (Comment commentList1OldComment : commentList1Old) {
+                if (!commentList1New.contains(commentList1OldComment)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Comment " + commentList1OldComment + " since its lastEditBy field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -166,6 +250,13 @@ public class AccountJpaController implements Serializable {
             }
             threadListNew = attachedThreadListNew;
             account.setThreadList(threadListNew);
+            List<Thread> attachedThreadList1New = new ArrayList<Thread>();
+            for (Thread threadList1NewThreadToAttach : threadList1New) {
+                threadList1NewThreadToAttach = em.getReference(threadList1NewThreadToAttach.getClass(), threadList1NewThreadToAttach.getThreadID());
+                attachedThreadList1New.add(threadList1NewThreadToAttach);
+            }
+            threadList1New = attachedThreadList1New;
+            account.setThreadList1(threadList1New);
             List<Friendship> attachedFriendshipListNew = new ArrayList<Friendship>();
             for (Friendship friendshipListNewFriendshipToAttach : friendshipListNew) {
                 friendshipListNewFriendshipToAttach = em.getReference(friendshipListNewFriendshipToAttach.getClass(), friendshipListNewFriendshipToAttach.getFriendShipID());
@@ -173,6 +264,13 @@ public class AccountJpaController implements Serializable {
             }
             friendshipListNew = attachedFriendshipListNew;
             account.setFriendshipList(friendshipListNew);
+            List<Friendship> attachedFriendshipList1New = new ArrayList<Friendship>();
+            for (Friendship friendshipList1NewFriendshipToAttach : friendshipList1New) {
+                friendshipList1NewFriendshipToAttach = em.getReference(friendshipList1NewFriendshipToAttach.getClass(), friendshipList1NewFriendshipToAttach.getFriendShipID());
+                attachedFriendshipList1New.add(friendshipList1NewFriendshipToAttach);
+            }
+            friendshipList1New = attachedFriendshipList1New;
+            account.setFriendshipList1(friendshipList1New);
             List<Comment> attachedCommentListNew = new ArrayList<Comment>();
             for (Comment commentListNewCommentToAttach : commentListNew) {
                 commentListNewCommentToAttach = em.getReference(commentListNewCommentToAttach.getClass(), commentListNewCommentToAttach.getCommentID());
@@ -180,6 +278,13 @@ public class AccountJpaController implements Serializable {
             }
             commentListNew = attachedCommentListNew;
             account.setCommentList(commentListNew);
+            List<Comment> attachedCommentList1New = new ArrayList<Comment>();
+            for (Comment commentList1NewCommentToAttach : commentList1New) {
+                commentList1NewCommentToAttach = em.getReference(commentList1NewCommentToAttach.getClass(), commentList1NewCommentToAttach.getCommentID());
+                attachedCommentList1New.add(commentList1NewCommentToAttach);
+            }
+            commentList1New = attachedCommentList1New;
+            account.setCommentList1(commentList1New);
             account = em.merge(account);
             if (accIconIDOld != null && !accIconIDOld.equals(accIconIDNew)) {
                 accIconIDOld.getAccountList().remove(account);
@@ -191,23 +296,45 @@ public class AccountJpaController implements Serializable {
             }
             for (Thread threadListNewThread : threadListNew) {
                 if (!threadListOld.contains(threadListNewThread)) {
-                    Account oldAccountIDOfThreadListNewThread = threadListNewThread.getAccountID();
-                    threadListNewThread.setAccountID(account);
+                    Account oldLastUpdateByOfThreadListNewThread = threadListNewThread.getLastUpdateBy();
+                    threadListNewThread.setLastUpdateBy(account);
                     threadListNewThread = em.merge(threadListNewThread);
-                    if (oldAccountIDOfThreadListNewThread != null && !oldAccountIDOfThreadListNewThread.equals(account)) {
-                        oldAccountIDOfThreadListNewThread.getThreadList().remove(threadListNewThread);
-                        oldAccountIDOfThreadListNewThread = em.merge(oldAccountIDOfThreadListNewThread);
+                    if (oldLastUpdateByOfThreadListNewThread != null && !oldLastUpdateByOfThreadListNewThread.equals(account)) {
+                        oldLastUpdateByOfThreadListNewThread.getThreadList().remove(threadListNewThread);
+                        oldLastUpdateByOfThreadListNewThread = em.merge(oldLastUpdateByOfThreadListNewThread);
+                    }
+                }
+            }
+            for (Thread threadList1NewThread : threadList1New) {
+                if (!threadList1Old.contains(threadList1NewThread)) {
+                    Account oldAccountIDOfThreadList1NewThread = threadList1NewThread.getAccountID();
+                    threadList1NewThread.setAccountID(account);
+                    threadList1NewThread = em.merge(threadList1NewThread);
+                    if (oldAccountIDOfThreadList1NewThread != null && !oldAccountIDOfThreadList1NewThread.equals(account)) {
+                        oldAccountIDOfThreadList1NewThread.getThreadList1().remove(threadList1NewThread);
+                        oldAccountIDOfThreadList1NewThread = em.merge(oldAccountIDOfThreadList1NewThread);
                     }
                 }
             }
             for (Friendship friendshipListNewFriendship : friendshipListNew) {
                 if (!friendshipListOld.contains(friendshipListNewFriendship)) {
-                    Account oldAccountIDOfFriendshipListNewFriendship = friendshipListNewFriendship.getAccountID();
-                    friendshipListNewFriendship.setAccountID(account);
+                    Account oldAccountID2OfFriendshipListNewFriendship = friendshipListNewFriendship.getAccountID2();
+                    friendshipListNewFriendship.setAccountID2(account);
                     friendshipListNewFriendship = em.merge(friendshipListNewFriendship);
-                    if (oldAccountIDOfFriendshipListNewFriendship != null && !oldAccountIDOfFriendshipListNewFriendship.equals(account)) {
-                        oldAccountIDOfFriendshipListNewFriendship.getFriendshipList().remove(friendshipListNewFriendship);
-                        oldAccountIDOfFriendshipListNewFriendship = em.merge(oldAccountIDOfFriendshipListNewFriendship);
+                    if (oldAccountID2OfFriendshipListNewFriendship != null && !oldAccountID2OfFriendshipListNewFriendship.equals(account)) {
+                        oldAccountID2OfFriendshipListNewFriendship.getFriendshipList().remove(friendshipListNewFriendship);
+                        oldAccountID2OfFriendshipListNewFriendship = em.merge(oldAccountID2OfFriendshipListNewFriendship);
+                    }
+                }
+            }
+            for (Friendship friendshipList1NewFriendship : friendshipList1New) {
+                if (!friendshipList1Old.contains(friendshipList1NewFriendship)) {
+                    Account oldAccountID1OfFriendshipList1NewFriendship = friendshipList1NewFriendship.getAccountID1();
+                    friendshipList1NewFriendship.setAccountID1(account);
+                    friendshipList1NewFriendship = em.merge(friendshipList1NewFriendship);
+                    if (oldAccountID1OfFriendshipList1NewFriendship != null && !oldAccountID1OfFriendshipList1NewFriendship.equals(account)) {
+                        oldAccountID1OfFriendshipList1NewFriendship.getFriendshipList1().remove(friendshipList1NewFriendship);
+                        oldAccountID1OfFriendshipList1NewFriendship = em.merge(oldAccountID1OfFriendshipList1NewFriendship);
                     }
                 }
             }
@@ -219,6 +346,17 @@ public class AccountJpaController implements Serializable {
                     if (oldAccountIDOfCommentListNewComment != null && !oldAccountIDOfCommentListNewComment.equals(account)) {
                         oldAccountIDOfCommentListNewComment.getCommentList().remove(commentListNewComment);
                         oldAccountIDOfCommentListNewComment = em.merge(oldAccountIDOfCommentListNewComment);
+                    }
+                }
+            }
+            for (Comment commentList1NewComment : commentList1New) {
+                if (!commentList1Old.contains(commentList1NewComment)) {
+                    Account oldLastEditByOfCommentList1NewComment = commentList1NewComment.getLastEditBy();
+                    commentList1NewComment.setLastEditBy(account);
+                    commentList1NewComment = em.merge(commentList1NewComment);
+                    if (oldLastEditByOfCommentList1NewComment != null && !oldLastEditByOfCommentList1NewComment.equals(account)) {
+                        oldLastEditByOfCommentList1NewComment.getCommentList1().remove(commentList1NewComment);
+                        oldLastEditByOfCommentList1NewComment = em.merge(oldLastEditByOfCommentList1NewComment);
                     }
                 }
             }
@@ -257,14 +395,28 @@ public class AccountJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Thread " + threadListOrphanCheckThread + " in its threadList field has a non-nullable accountID field.");
+                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Thread " + threadListOrphanCheckThread + " in its threadList field has a non-nullable lastUpdateBy field.");
+            }
+            List<Thread> threadList1OrphanCheck = account.getThreadList1();
+            for (Thread threadList1OrphanCheckThread : threadList1OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Thread " + threadList1OrphanCheckThread + " in its threadList1 field has a non-nullable accountID field.");
             }
             List<Friendship> friendshipListOrphanCheck = account.getFriendshipList();
             for (Friendship friendshipListOrphanCheckFriendship : friendshipListOrphanCheck) {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Friendship " + friendshipListOrphanCheckFriendship + " in its friendshipList field has a non-nullable accountID field.");
+                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Friendship " + friendshipListOrphanCheckFriendship + " in its friendshipList field has a non-nullable accountID2 field.");
+            }
+            List<Friendship> friendshipList1OrphanCheck = account.getFriendshipList1();
+            for (Friendship friendshipList1OrphanCheckFriendship : friendshipList1OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Friendship " + friendshipList1OrphanCheckFriendship + " in its friendshipList1 field has a non-nullable accountID1 field.");
             }
             List<Comment> commentListOrphanCheck = account.getCommentList();
             for (Comment commentListOrphanCheckComment : commentListOrphanCheck) {
@@ -272,6 +424,13 @@ public class AccountJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Comment " + commentListOrphanCheckComment + " in its commentList field has a non-nullable accountID field.");
+            }
+            List<Comment> commentList1OrphanCheck = account.getCommentList1();
+            for (Comment commentList1OrphanCheckComment : commentList1OrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Account (" + account + ") cannot be destroyed since the Comment " + commentList1OrphanCheckComment + " in its commentList1 field has a non-nullable lastEditBy field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

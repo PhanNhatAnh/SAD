@@ -7,9 +7,9 @@
     <persistence-unit name="4room" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>n3.web.entity.Comment</class>
-    <class>n3.web.entity.Accounticon</class>
     <class>n3.web.entity.Rating</class>
     <class>n3.web.entity.Friendship</class>
+    <class>n3.web.entity.Accounticon</class>
     <class>n3.web.entity.Account</class>
     <class>n3.web.entity.Thread</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>

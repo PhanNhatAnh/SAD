@@ -42,6 +42,11 @@ public class ThreadJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Account lastUpdateBy = thread.getLastUpdateBy();
+            if (lastUpdateBy != null) {
+                lastUpdateBy = em.getReference(lastUpdateBy.getClass(), lastUpdateBy.getAccountID());
+                thread.setLastUpdateBy(lastUpdateBy);
+            }
             Account accountID = thread.getAccountID();
             if (accountID != null) {
                 accountID = em.getReference(accountID.getClass(), accountID.getAccountID());
@@ -54,6 +59,10 @@ public class ThreadJpaController implements Serializable {
             }
             thread.setCommentList(attachedCommentList);
             em.persist(thread);
+            if (lastUpdateBy != null) {
+                lastUpdateBy.getThreadList().add(thread);
+                lastUpdateBy = em.merge(lastUpdateBy);
+            }
             if (accountID != null) {
                 accountID.getThreadList().add(thread);
                 accountID = em.merge(accountID);
@@ -81,6 +90,8 @@ public class ThreadJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Thread persistentThread = em.find(Thread.class, thread.getThreadID());
+            Account lastUpdateByOld = persistentThread.getLastUpdateBy();
+            Account lastUpdateByNew = thread.getLastUpdateBy();
             Account accountIDOld = persistentThread.getAccountID();
             Account accountIDNew = thread.getAccountID();
             List<Comment> commentListOld = persistentThread.getCommentList();
@@ -97,6 +108,10 @@ public class ThreadJpaController implements Serializable {
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
+            if (lastUpdateByNew != null) {
+                lastUpdateByNew = em.getReference(lastUpdateByNew.getClass(), lastUpdateByNew.getAccountID());
+                thread.setLastUpdateBy(lastUpdateByNew);
+            }
             if (accountIDNew != null) {
                 accountIDNew = em.getReference(accountIDNew.getClass(), accountIDNew.getAccountID());
                 thread.setAccountID(accountIDNew);
@@ -109,6 +124,14 @@ public class ThreadJpaController implements Serializable {
             commentListNew = attachedCommentListNew;
             thread.setCommentList(commentListNew);
             thread = em.merge(thread);
+            if (lastUpdateByOld != null && !lastUpdateByOld.equals(lastUpdateByNew)) {
+                lastUpdateByOld.getThreadList().remove(thread);
+                lastUpdateByOld = em.merge(lastUpdateByOld);
+            }
+            if (lastUpdateByNew != null && !lastUpdateByNew.equals(lastUpdateByOld)) {
+                lastUpdateByNew.getThreadList().add(thread);
+                lastUpdateByNew = em.merge(lastUpdateByNew);
+            }
             if (accountIDOld != null && !accountIDOld.equals(accountIDNew)) {
                 accountIDOld.getThreadList().remove(thread);
                 accountIDOld = em.merge(accountIDOld);
@@ -167,6 +190,11 @@ public class ThreadJpaController implements Serializable {
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            Account lastUpdateBy = thread.getLastUpdateBy();
+            if (lastUpdateBy != null) {
+                lastUpdateBy.getThreadList().remove(thread);
+                lastUpdateBy = em.merge(lastUpdateBy);
             }
             Account accountID = thread.getAccountID();
             if (accountID != null) {

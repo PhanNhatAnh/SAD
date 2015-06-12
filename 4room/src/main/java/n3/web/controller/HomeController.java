@@ -1,5 +1,9 @@
 package n3.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import n3.web.entity.Account;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +21,9 @@ public class HomeController extends BaseController{
      * @return home
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String homeDefault(Model model) {
-    	initData(model);
+    public String homeDefault(Model model, HttpServletRequest request) {
+    	Account account = (Account) request.getSession().getAttribute("USER");
+    	initData(model, account);
         return "home";
     }
 
@@ -29,8 +34,9 @@ public class HomeController extends BaseController{
      * @return home
      */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(Model model) {
-    	initData(model);
+    public String home(Model model, HttpServletRequest request) {
+    	Account account = (Account) request.getSession().getAttribute("USER");
+    	initData(model, account);
         return "home";
     }
 }
