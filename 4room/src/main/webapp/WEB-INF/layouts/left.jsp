@@ -44,7 +44,7 @@
 	</div>
 	<div class="activity widget">
 		<h3 class="widget-header">
-			<a href="#">ACTIVITY</a>
+			ACTIVITYS
 		</h3>
 		<ul class="widget-list">
 			<li><a class="listitem" href="#">Threads <c:if
@@ -66,7 +66,7 @@
 	<div class="subscriptions widget" 
 	style="border-top: 1px solid #e5e3e4;margin-right: 10px;">
 		<h3 class="widget-header">
-			<a href="#">Online members</a>
+			Online members
 		</h3>
 		<ul class="widget-list">
 		<c:forEach var="member" items="${MEMBERS }">

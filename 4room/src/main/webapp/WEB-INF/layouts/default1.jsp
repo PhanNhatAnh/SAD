@@ -14,7 +14,12 @@
 <link rel="stylesheet" href="resources/css/normalize.min.css">
 <link rel="stylesheet" href="resources/css/main.css">
 <link rel="stylesheet" href="resources/css/style.css">
+<!-- DATA TABLES -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+
 <script src="resources/js/vendor/modernizr-2.6.2.min.js"></script>
+<script src="resources/jquery/jquery.min.js"></script>
 </head>
 <body>
 	<!--header-->

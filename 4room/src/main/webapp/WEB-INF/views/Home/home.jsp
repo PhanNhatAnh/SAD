@@ -26,11 +26,7 @@
 					comment</span>
 			</div>
 			<div class="problem-body">
-				<div class="problem-vote">
-					<div class="stat-count">16</div>
-					<div class="stat-desc">follows</div>
-				</div>
-				<div class="problem-content">
+				<div class="problem-content" style="margin-left: 0px;">
 					<a href="thread?threadID=${thread.threadID }" style="text-decoration: none;">
 					<h2>${thread.name}</h2></a>
 				</div>

@@ -29,4 +29,19 @@ public class ThreadController extends BaseController{
         
     	return "thread";
     }
+	
+	@RequestMapping(value = "sendComment", method = RequestMethod.GET)
+    public String sendComment(@RequestParam(value = "comment", required = false) String comment,
+    		@RequestParam(value = "threadID") String threadID,
+    		Model model, HttpServletRequest request) {
+		ThreadService threadService = new ThreadService();
+		CommentService commentService = new CommentService();
+		Thread thread = threadService.findThreadByID(threadID);
+    	Account account = (Account) request.getSession().getAttribute("USER");
+    	initData(model, account);
+    	model.addAttribute("THREAD", thread);
+    	model.addAttribute("COMMENTS", commentService.getAllCommentOfThread(thread));
+        
+    	return "thread";
+    }
 }

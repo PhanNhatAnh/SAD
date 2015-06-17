@@ -60,7 +60,7 @@ a.username {
 <header>
 	<div class="container">
 		<div class="logo">
-			<a href="home" style="text-decoration: none;"><h3>SpaceShip Battle</h3></a>
+			<a href="home" style="text-decoration: none;color: white;"><h3>SpaceShip Battle</h3></a>
 		</div>
 		<ul class="navmenu">
 			<li><a href="#">Event</a></li>
@@ -80,6 +80,9 @@ a.username {
 						</div>
 					</a>
 					<ul class="sub-menu">
+						<c:if test="${USER.role == 'admin'}">
+							<li><a href="manageAcc">Manage Account</a></li>
+						</c:if>
 						<li><a href="#">My Profile</a></li>
 						<li><a href="logout">Logout</a></li>
 					</ul>

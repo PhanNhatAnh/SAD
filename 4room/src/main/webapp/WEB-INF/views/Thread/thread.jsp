@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false"%>
+<!-- AdminLTE -->
+<link href="resources/AdminLTE/css/AdminLTE.css" rel="stylesheet"
+	type="text/css" />
 <section class="content-mid" style="width: 80%;">
 	<div class="content-mid-header">
 		<h1>${THREAD.name }</h1>
@@ -8,20 +11,41 @@
 	<div class="problem-container">
 		<c:forEach var="comment" items="${COMMENTS }">
 			<div class="problem-item">
-			<div class="problem-header">
-				<div class="problem-user">
-					<a href=""><img width="17px" height="17px" 
-					src="resources/img/avatar/${comment.accountID.avatarImg}.jpg">
-					<span>${comment.accountID.username }</span></a>
-				</div>				
-			</div>
-			<div class="problem-body">				
-				<div class="problem-content">
-					<h2>${comment.content}</h2>
+				<div class="problem-header">
+					<div class="problem-user">
+						<a href=""><img width="17px" height="17px"
+							src="resources/img/avatar/${comment.accountID.avatarImg}.jpg">
+							<span>${comment.accountID.username }</span></a>
+					</div>
 				</div>
-				<div class="clearfix"></div>
+				<div class="problem-body">
+					<div class="problem-content" style="margin-left: 0px;">
+						<h2>${comment.content}</h2>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</c:forEach>
+		<div class="problem-item">
+			<div class="problem-body">
+				<div class='box-body pad'>
+					<form action="sendComment" method="post">
+						<textarea id="editor" name="comment" rows="5" cols="100">                                            
+                    </textarea>
+                    <input type="hidden" name="threadID" value="${THREAD.threadID }">
+                    <input type="submit" value="Send">
+					</form>
+				</div>
 			</div>
 		</div>
-		</c:forEach>
 	</div>
 </section>
+<!-- CK Editor -->
+<script src="https://cdn.ckeditor.com/4.4.3/standard/ckeditor.js"></script>
+<script type="text/javascript">
+      $(function () {
+        // Replace the <textarea id="editor1"> with a CKEditor
+        // instance, using default configuration.
+        CKEDITOR.replace('editor');
+      });
+    </script>
