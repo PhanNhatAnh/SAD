@@ -6,6 +6,8 @@ import javax.persistence.EntityManagerFactory;
 
 import n3.web.entity.Account;
 import n3.web.entity.Thread;
+import n3.web.entityController.exceptions.IllegalOrphanException;
+import n3.web.entityController.exceptions.NonexistentEntityException;
 import n3.web.exEntityController.ExThreadController;
 
 import org.apache.log4j.Logger;
@@ -30,6 +32,10 @@ public class ThreadService extends BaseService{
 		return controller.listTop10Thread();
 	}
 	
+	public List<Thread> listBottom10Thread() {
+		return controller.listBottom10Thread();
+	}
+	
 	public List<Thread> getThreadByAccID(Account accID) {
 		return controller.getThreadByAccID(accID);
 	}
@@ -37,5 +43,21 @@ public class ThreadService extends BaseService{
 	public Thread findThreadByID(String threadID) {
 		int id = Integer.parseInt(threadID);
 		return controller.findThread(id);
+	}
+	
+	public boolean updateThread(Thread thread) {
+		try {
+			controller.edit(thread);
+		} catch (IllegalOrphanException e) {
+			LOG.debug("IllegalOrphanException: " + e.getMessage());
+			return false;
+		} catch (NonexistentEntityException e) {
+			LOG.debug("NonexistentEntityException: " + e.getMessage());
+			return false;
+		} catch (Exception e) {
+			LOG.debug("Exception: " + e.getMessage());
+			return false;
+		}
+		return true;
 	}
 }

@@ -5,4 +5,7 @@
 	<definition extends="default1" name="thread">
 		<put-attribute name="body" value="/WEB-INF/views/Thread/thread.jsp" />
 	</definition>
+	<definition extends="default1" name="comment">
+		<put-attribute name="body" value="/WEB-INF/views/Thread/comment.jsp" />
+	</definition>
 </tiles-definitions>

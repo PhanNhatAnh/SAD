@@ -58,6 +58,7 @@ a.username {
 }
 </style>
 <header>
+<c:set var="DATETIME_FORMAT" scope="application">dd-MM-yyyy HH:mm</c:set>
 	<div class="container">
 		<div class="logo">
 			<a href="home" style="text-decoration: none;color: white;"><h3>SpaceShip Battle</h3></a>
@@ -91,8 +92,8 @@ a.username {
 				<!-- not empty user -->
 				<c:if test="${empty USER}">
 				<div style="margin-top: 10px;">
-				<font color="white"><a href="login">Login</a></font> <font color="white">
-					<a href="register">Register</a></font>
+				<a href="login" style="color: white;">Login</a>
+					<a href="register" style="color: white;">Register</a>
 				</div>
 				</c:if>
 			</div>

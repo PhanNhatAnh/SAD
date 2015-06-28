@@ -4,5 +4,6 @@
 <tiles-definitions>
 	<definition extends="default1" name="home">
 		<put-attribute name="body" value="/WEB-INF/views/Home/home.jsp" />
+		<put-attribute name="right" value="/WEB-INF/layouts/right.jsp" />
 	</definition>
 </tiles-definitions>

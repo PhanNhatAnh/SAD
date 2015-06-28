@@ -48,4 +48,18 @@ public class ExThreadController extends ThreadJpaController{
             em.close();
         }	
 	}
+
+	public List<Thread> listBottom10Thread() {
+		List<Thread> list = new ArrayList<Thread>();
+    	EntityManager em = getEntityManager();
+    	try {
+            Query query = em.createNativeQuery("SELECT * FROM Thread ORDER BY lastUpdate ASC LIMIT 0, 10",
+            		Thread.class);
+            list = query.getResultList();
+            
+            return list;
+        } finally {
+            em.close();
+        }
+	}
 }

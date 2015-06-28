@@ -15,7 +15,7 @@ CREATE TABLE AccountIcon (
 	 , PRIMARY KEY (accIconID)
 );
 
-INSERT INTO `accounticon` VALUES 
+INSERT INTO `AccountIcon` VALUES 
 (1,'icon1'),
 (2,'icon2'),
 (3,'icon3'),
