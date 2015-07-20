@@ -10,7 +10,6 @@
 }
 header {
 	height: 50px;
-	background-color: #a73e2d;
 	box-shadow: 0 0 15px -5px rgba(0,0,0,0.5) inset;
 	cursor: default;
 }
@@ -158,7 +157,7 @@ nav.content-right {
 section.content-mid {
 	padding: 20px 10px;
 	float: left;
-	width: 60%;
+	width: 80%;
 }
 
 span.silver.medal {

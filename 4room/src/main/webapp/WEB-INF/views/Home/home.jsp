@@ -5,13 +5,17 @@
 <%@ page session="false"%>
 <section class="content-mid">
 	<div class="content-mid-header">
-		<h1>4 room</h1>
+		<h4><a href="home">4 room</a></h4> 
+		<c:if test="${not empty USER }">
+			<button type="button"><a href="newThread">New Thread</a></button>
+		</c:if>
+		<c:if test="${empty USER }">
+			<h1></h1>
+		</c:if>
 		<div class="tabs">
 			<ul>
 				<li class="active"><a href="newest">newest</a></li>
-				<li><a href="oldest">oldest</a></li>
-				<li><a href="#">my thread</a></li>
-				<li><a href="#">my follows</a></li>
+				<li><a href="oldest">oldest</a></li>							
 			</ul>
 		</div>
 	</div>
@@ -57,4 +61,3 @@ $(document).ready(function () {
 	});
 });
 </script>
-<%@ include file="/WEB-INF/layouts/right.jsp" %>

@@ -49,8 +49,11 @@ public class LoginController extends BaseController{
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String homelogin(@RequestParam(value = "ERROR", required = false) String error,
-            @RequestParam(value = "LOGOUT", required = false) String logout, Model model) {
-
+            @RequestParam(value = "LOGOUT", required = false) String logout,
+            HttpServletRequest request, Model model) {
+    	Account account = (Account) request.getSession().getAttribute("USER");
+    	initData(model, account);
+    	model.addAttribute("USER", account);
         if (error != null) {
             model.addAttribute("ERROR", WRONG_USER_AND_PASS_ERROR);
         } else {
@@ -73,10 +76,10 @@ public class LoginController extends BaseController{
     	if ((username != null) && (password != null)) {
 			AccountService accountService = new AccountService();
     		Account account = accountService.checkLogin(username, password);
-    		if (account != null) {
-    			LOG.info("user: " + account);
-    			initData(model,account);
+    		if (account != null) {    			
     			request.getSession().setAttribute("USER", account);
+    			initData(model, account);
+    	    	model.addAttribute("USER", account);
     			
     			return "home";
 			} else {
@@ -86,6 +89,7 @@ public class LoginController extends BaseController{
 			 model.addAttribute("ERROR", WRONG_USER_AND_PASS_ERROR);
 		}
 
+    	
         return "login";
     }
     
@@ -97,7 +101,7 @@ public class LoginController extends BaseController{
     	
     	return "home";
     }
-
+    
     /**
      * Access denying.
      * 

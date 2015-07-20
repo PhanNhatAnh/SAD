@@ -45,6 +45,10 @@ public class ThreadService extends BaseService{
 		return controller.findThread(id);
 	}
 	
+	public void createThread(Thread thread) {
+		controller.create(thread);
+	}
+	
 	public boolean updateThread(Thread thread) {
 		try {
 			controller.edit(thread);

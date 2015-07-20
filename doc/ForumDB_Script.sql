@@ -24,15 +24,21 @@ INSERT INTO `AccountIcon` VALUES
 CREATE TABLE Account (
        accountID INT NOT NULL AUTO_INCREMENT
 	 , username VARCHAR(50) NOT null
-	 , passwords VARCHAR(50) NOT NULL
-	 , role VARCHAR(32) NOT NULL
+	 , passwords VARCHAR(50) 
+	 , role VARCHAR(32) 
 	 , avatarImg VARCHAR(50) NOT null
 	 , accIconID INT NOT NULL
+	 , fbID varchar(25) 
+	 , email varchar(150)
+	 , firstname varchar(50)
+	 , gender varchar(50)
+	 , lastname varchar(50)
+	 , linkFB varchar(150)
 	 , PRIMARY KEY (accountID)
 	 , FOREIGN KEY (accIconID) REFERENCES AccountIcon(accIconID)
 );
 
-INSERT INTO `account` VALUES 
+INSERT INTO account(accountID, username, passwords, role, avatarImg, accIconID) VALUES 
 (1,'member','member','member','member',1),
 (2,'admin','admin','admin','aking',2),
 (3,'A.King','123456','admin','aking',2),

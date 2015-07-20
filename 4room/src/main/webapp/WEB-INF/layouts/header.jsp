@@ -59,7 +59,7 @@ a.username {
 </style>
 <header>
 <c:set var="DATETIME_FORMAT" scope="application">dd-MM-yyyy HH:mm</c:set>
-	<div class="container">
+	<div class="container" style="background-color: #a73e2d;">
 		<div class="logo">
 			<a href="home" style="text-decoration: none;color: white;"><h3>SpaceShip Battle</h3></a>
 		</div>

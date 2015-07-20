@@ -1,5 +1,7 @@
 package n3.web.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import n3.web.entity.Account;
@@ -18,6 +20,40 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ThreadController extends BaseController{
 
+	@RequestMapping(value = "newThread", method = RequestMethod.GET)
+    public String newThread(Model model, HttpServletRequest request) {
+    	Account account = (Account) request.getSession().getAttribute("USER");
+    	initData(model, account);
+    	model.addAttribute("USER", account);
+        
+    	return "newThread";
+    }
+	
+	@RequestMapping(value = "createThread", method = RequestMethod.POST)
+    public String createThread(
+    		@RequestParam(value = "threadName") String threadName,
+    		@RequestParam(value = "contentCom") String content,
+    		Model model, HttpServletRequest request) {
+    	Account account = (Account) request.getSession().getAttribute("USER");
+    	
+    	ThreadService threadService = new ThreadService();
+		Thread thread = new Thread(1, threadName);
+		thread.setAccountID(account);
+		thread.setLastUpdateBy(account);
+		thread.setIsLock(false);
+		Date date = new Date();
+		thread.setLastUpdate(date);
+		threadService.createThread(thread);
+		
+		CommentService commentService = new CommentService();
+		commentService.createComment(thread, account, content);
+    	
+    	initData(model, account);
+    	model.addAttribute("USER", account);
+        
+    	return "home";
+    }
+	
 	@RequestMapping(value = "thread", method = RequestMethod.GET)
     public String threadDefault(@RequestParam(value = "threadID") String threadID,
     		Model model, HttpServletRequest request) {

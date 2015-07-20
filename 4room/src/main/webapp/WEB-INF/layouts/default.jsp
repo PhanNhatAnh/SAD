@@ -4,63 +4,46 @@
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-
 <!DOCTYPE html>
-<html>
 <head>
 <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <title>SpaceShip Battle</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="resources/css/normalize.min.css">
+<link rel="stylesheet" href="resources/css/main.css">
+<link rel="stylesheet" href="resources/css/style.css">
+<!-- BOOSTRAP -->
+<link rel="stylesheet" href="resources/bootstrap/css/boostrap.min.css">
+<!-- DATA TABLES -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 
-<!-- Bootstrap -->
-<link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css"
-	href="resources/bootstrap/css/bootstrap-theme.min.css">
-
-<!-- jQuery -->
-<script type="text/javascript" src="resources/jquery/jquery.min.js"></script>
-
+<script src="resources/js/vendor/modernizr-2.6.2.min.js"></script>
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/bootstrap/js/boostrap.min.js"></script>
 </head>
-
-<body>
+<body style="background: url(resources/img/new.png);">
 	<!--header-->
 	<tiles:insertAttribute name="header" ignore="true" />
 	<!-- /header -->
 
-	<!-- body -->
-	<div class="container">
-		<div class="">
-			<!-- not empty user -->
-			<c:if test="${USER != null}">
-				<!-- left -->
-				<div class="pull-left" style="width: 20%">
-					<tiles:insertAttribute name="left" />
-				</div>
-			<!-- /left -->
-			</c:if>
+	<section class="content">
+		<!-- right -->
+		<tiles:insertAttribute name="right" ignore="true"/>
+		<!-- /right -->
 
-			<!-- right -->
-			<div class="pull-right" style="width: 20%;padding-left: 16px;">
-				<tiles:insertAttribute name="right" />
-			</div>
-			<!-- /right -->
-
-			<!-- Content -->
-			<div style="width: 80%; margin : 10px;">
-				<tiles:insertAttribute name="body"/>
-			</div>
-			<!-- /Content -->
-
-		</div>
-	</div>
-	<!-- /body -->
+		<!-- Content -->
+		<tiles:insertAttribute name="body" />
+		<!-- /Content -->
+		<br class="spacer" />
+	</section>
 
 	<!-- footer -->
 	<tiles:insertAttribute name="footer" />
 	<!-- /footer -->
-
-	<!-- bootstrap -->
-	<script type="text/javascript"
-		src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/js/plugins.js"></script>
+	<script src="resources/js/main.js"></script>
 </body>
 </html>

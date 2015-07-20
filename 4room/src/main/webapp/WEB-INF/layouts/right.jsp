@@ -4,9 +4,11 @@
 <nav class="content-right" style="float: right;">
 	<div class="widget-welcomebox">
 		<h2>SpaceShip Battle</h2>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			Phasellus urna nisi, fringilla quis bibendum sit amet, malesuada id
-			eros. Sed suscipit aliquam volutpat...</p>
+		<p>Become a hero who go around the galaxy 
+			to find the man who killed his family.
+		  	It isn't an avenge, it is about justice .
+		   	Lone way , far from home and try to safe people in
+		    the galaxy far from the bad guy The Mighty Dark ...</p>
 		<p>
 			<a href="#">Read More...</a>
 		</p>

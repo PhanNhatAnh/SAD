@@ -27,7 +27,7 @@ public class HomeController extends BaseController{
     	Account account = (Account) request.getSession().getAttribute("USER");
     	initData(model, account);
     	model.addAttribute("USER", account);
-        return "home";
+        return "index";
     }
 
     /**

@@ -24,7 +24,7 @@
 <script src="resources/jquery/jquery.min.js"></script>
 <script src="resources/bootstrap/js/boostrap.min.js"></script>
 </head>
-<body>
+<body style="background: url(resources/img/new.png);">
 	<!--header-->
 	<tiles:insertAttribute name="header" ignore="true" />
 	<!-- /header -->

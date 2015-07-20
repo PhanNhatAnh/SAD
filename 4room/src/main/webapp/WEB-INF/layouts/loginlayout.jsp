@@ -16,7 +16,7 @@
 <script type="text/javascript" src="resources/jquery/jquery.min.js"></script>
 
 </head>
-<body class="loginPage">
+<body class="loginPage" style="background: url(resources/img/new.png);">
   <div class="row">
     <div class="container">
       <a href="home">

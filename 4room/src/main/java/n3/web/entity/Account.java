@@ -1,5 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package n3.web.entity;
@@ -36,7 +37,13 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username"),
     @NamedQuery(name = "Account.findByPasswords", query = "SELECT a FROM Account a WHERE a.passwords = :passwords"),
     @NamedQuery(name = "Account.findByRole", query = "SELECT a FROM Account a WHERE a.role = :role"),
-    @NamedQuery(name = "Account.findByAvatarImg", query = "SELECT a FROM Account a WHERE a.avatarImg = :avatarImg")})
+    @NamedQuery(name = "Account.findByAvatarImg", query = "SELECT a FROM Account a WHERE a.avatarImg = :avatarImg"),
+    @NamedQuery(name = "Account.findByFbID", query = "SELECT a FROM Account a WHERE a.fbID = :fbID"),
+    @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email = :email"),
+    @NamedQuery(name = "Account.findByFirstname", query = "SELECT a FROM Account a WHERE a.firstname = :firstname"),
+    @NamedQuery(name = "Account.findByGender", query = "SELECT a FROM Account a WHERE a.gender = :gender"),
+    @NamedQuery(name = "Account.findByLastname", query = "SELECT a FROM Account a WHERE a.lastname = :lastname"),
+    @NamedQuery(name = "Account.findByLinkFB", query = "SELECT a FROM Account a WHERE a.linkFB = :linkFB")})
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,15 +54,26 @@ public class Account implements Serializable {
     @Basic(optional = false)
     @Column(name = "username")
     private String username;
-    @Basic(optional = false)
     @Column(name = "passwords")
     private String passwords;
-    @Basic(optional = false)
     @Column(name = "role")
     private String role;
     @Basic(optional = false)
     @Column(name = "avatarImg")
     private String avatarImg;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "fbID")
+    private String fbID;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "firstname")
+    private String firstname;
+    @Column(name = "gender")
+    private String gender;
+    @Column(name = "lastname")
+    private String lastname;
+    @Column(name = "linkFB")
+    private String linkFB;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "lastUpdateBy")
     private List<Thread> threadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
@@ -79,11 +97,9 @@ public class Account implements Serializable {
         this.accountID = accountID;
     }
 
-    public Account(Integer accountID, String username, String passwords, String role, String avatarImg) {
+    public Account(Integer accountID, String username, String avatarImg) {
         this.accountID = accountID;
         this.username = username;
-        this.passwords = passwords;
-        this.role = role;
         this.avatarImg = avatarImg;
     }
 
@@ -125,6 +141,54 @@ public class Account implements Serializable {
 
     public void setAvatarImg(String avatarImg) {
         this.avatarImg = avatarImg;
+    }
+
+    public String getFbID() {
+        return fbID;
+    }
+
+    public void setFbID(String fbID) {
+        this.fbID = fbID;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getLinkFB() {
+        return linkFB;
+    }
+
+    public void setLinkFB(String linkFB) {
+        this.linkFB = linkFB;
     }
 
     @XmlTransient
